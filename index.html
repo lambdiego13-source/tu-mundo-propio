@@ -3,171 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Buscador Independiente</title>
+    <title>Tu Mundo - Buscador Independiente VIBRANTE</title>
     <style>
+        /* --- NUEVO ESQUEMA DE COLORES VIBRANTES (NEÓN NATURALEZA) --- */
         :root {
-            --forest-dark: #1E5631; 
-            --ocean-blue: #0D3E5E; 
-            --lavender: #A27BBA; 
-            --leaf-green: #2ECC71; 
-            --bg: #FDFEFE; 
-            --text: #2F363F; 
+            /* Degradado de la cabecera: Azul Neón a Púrpura Neón */
+            --gradient-start: #00FFFF; /* Cian Neón */
+            --gradient-end: #FF00FF; /* Fucsia Neón */
+            /* Elementos: Lavanda Neón y Verde Lima Eléctrico */
+            --vibrant-fucsia: #FF00FF; /* Fucsia Neón */
+            --vibrant-cian: #00FFFF; /* Cian Neón */
+            --vibrant-verde: #39FF14; /* Verde Lima Eléctrico */
+            --vibrant-amarillo: #FFFF00; /* Amarillo Neón */
+            --vibrant-purpura: #BF40BF; /* Púrpura Lavanda */
+
+            /* Fondo muy oscuro para que los colores resalten */
+            --bg: #0C0F1A; 
+            /* Texto claro natural */
+            --text: #F1F1F1; 
+            /* Fondo de tarjeta oscuro */
+            --card-bg: rgba(26, 32, 44, 0.98); 
+            /* Fondo de cabecera de tabla */
+            --table-head-bg: #080B12;
         }
 
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text);
+            transition: 0.3s;
             display: flex;
             flex-direction: column;
+            align-items: center;
             min-height: 100vh;
+            /* Textura de fondo sutil neón */
+            background-image: url('https://www.transparenttextures.com/patterns/dark-dot-2.png');
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--vibrant-purpura);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: transform 0.1s;
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
         }
 
         header {
             width: 100%;
-            padding: 50px 0;
-            background: linear-gradient(135deg, var(--forest-dark), var(--ocean-blue));
+            padding: 70px 0;
+            /* Nuevo degradado neón */
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             text-align: center;
-            border-bottom: 5px solid var(--leaf-green);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+            border-bottom: 5px solid var(--vibrant-verde);
         }
 
-        .logo h1 {
-            font-size: clamp(35px, 8vw, 65px);
+        .logo-container h1 {
+            font-size: clamp(40px, 10vw, 80px);
             margin: 0;
-            color: white;
-            text-shadow: 3px 3px 0px var(--lavender);
-            letter-spacing: 4px;
+            /* Nuevo color de logo amarillo neón */
+            color: var(--vibrant-amarillo);
+            /* Sombra de texto potente lavanda */
+            text-shadow: 4px 4px 0px var(--vibrant-fucsia);
+            letter-spacing: 5px;
+            font-weight: 900;
         }
 
-        .main {
-            width: 92%;
+        .search-area {
+            width: 90%;
             max-width: 700px;
-            margin: -40px auto 0;
-            z-index: 5;
-        }
-
-        .search-box {
-            background: white;
-            padding: 30px;
-            border-radius: 45px;
-            border: 3px solid var(--leaf-green);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            background: var(--card-bg);
+            margin-top: -45px;
+            padding: 40px;
+            border-radius: 50px;
+            border: 3px solid var(--vibrant-verde);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             text-align: center;
         }
 
-        .flower-logo { width: 90px; margin-bottom: 15px; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        /* --- IMAGEN DE FLOR FOTORREALISTA (MARGARITA) --- */
+        .flower-icon {
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
 
-        .input-style {
+        .flower-icon img {
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px var(--vibrant-purpura); /* Sombra púrpura neón */
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-lupa {
+            position: absolute;
+            left: 20px;
+            font-size: 24px;
+            color: var(--vibrant-fucsia);
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        .search-input {
             width: 100%;
-            padding: 16px 25px;
+            padding: 15px 20px 15px 55px;
             font-size: 18px;
             border-radius: 50px;
-            border: 3px solid var(--lavender);
+            border: 3px solid var(--vibrant-fucsia);
             outline: none;
+            background: #080B12; /* Fondo de entrada oscuro */
+            color: var(--vibrant-cian); /* Texto cian neón */
             box-sizing: border-box;
-            color: var(--text);
+            transition: 0.3s;
         }
 
-        .tabs { margin: 20px 0; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .search-input:focus {
+            border-color: var(--vibrant-cian);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        }
+
+        .tabs {
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
         .tab {
-            padding: 10px 18px;
-            border: 2px solid var(--lavender);
-            background: none;
-            color: var(--lavender);
+            padding: 12px 25px;
+            border: 2px solid var(--vibrant-cian); /* Borde cian neón */
+            background: transparent;
+            color: var(--vibrant-cian);
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.2s;
+            transition: all 0.3s ease, transform 0.1s;
         }
-        .tab.active { background: var(--lavender); color: white; }
-        .tab:active { transform: scale(0.9); }
+
+        .tab:hover {
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .tab.active {
+            background: var(--vibrant-fucsia); /* Fondo fucsia neón activa */
+            border-color: var(--vibrant-fucsia);
+            color: white;
+            box-shadow: 0 0 15px var(--vibrant-fucsia);
+        }
+
+        .tab:active {
+            transform: scale(0.95);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
 
         .btn-buscar {
-            background: var(--leaf-green);
-            color: white;
-            padding: 16px 60px;
-            font-size: 24px;
+            background: var(--vibrant-verde); /* Verde lima eléctrico */
+            color: #0C0F1A; /* Texto oscuro para contraste */
+            padding: 18px 60px;
+            font-size: 26px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 900;
-            box-shadow: 0 7px 0px #229954;
-        }
-        .btn-buscar:active { transform: translateY(4px); box-shadow: 0 2px 0px #229954; }
-
-        /* --- RESULTADOS --- */
-        #results-area {
-            display: none;
-            background: white;
-            margin-top: 25px;
-            padding: 25px;
-            border-radius: 30px;
-            border: 2px solid var(--lavender);
+            letter-spacing: 2px;
+            box-shadow: 0 10px 0px #229954; /* Sombra verde oscuro definida */
+            transition: all 0.1s;
+            width: 100%;
+            max-width: 400px;
         }
 
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; }
-        .grid-item img { width: 100%; height: 140px; object-fit: cover; border-radius: 15px; }
+        .btn-buscar:hover {
+            background: #4FFF3D;
+        }
 
-        .news-item { margin-bottom: 15px; padding: 10px; border-left: 4px solid var(--leaf-green); background: #f9f9f9; }
+        .btn-buscar:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0px #229954;
+        }
 
-        /* --- TABLA DE HISTORIAL --- */
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, var(--gradient-end), var(--gradient-start));
+            color: #0C0F1A;
+            border-top: 5px solid var(--vibrant-verde);
+        }
+
+        /* SECCIÓN DE RESULTADOS */
+        #results-container {
+            display: none; /* Oculto al inicio */
+            background: var(--card-bg);
+            margin-top: 20px;
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid var(--vibrant-fucsia);
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        #results-title {
+            color: var(--vibrant-fucsia);
+            margin-top: 0;
+            text-shadow: 0 0 10px var(--vibrant-fucsia);
+        }
+
+        #search-term {
+            color: var(--vibrant-amarillo);
+            text-shadow: 0 0 10px var(--vibrant-amarillo);
+        }
+
+        .result-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(241, 241, 241, 0.2);
+        }
+
+        .result-item h3 { color: var(--vibrant-verde); margin: 0; font-size: 20px; text-shadow: 0 0 10px var(--vibrant-verde); }
+        .result-item p { font-size: 16px; margin: 8px 0; color: #D6DBDF; }
+        .result-item span { color: var(--vibrant- purpura); font-size: 14px; text-shadow: 0 0 5px var(--vibrant-purpura); }
+
+        .btn-volver {
+            margin-top: 15px;
+            background: var(--vibrant-purpura);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 5px 0px #8F308F;
+            transition: all 0.1s;
+        }
+
+        .btn-volver:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #8F308F;
+        }
+
+        /* --- TABLA DE HISTORIAL VIBRANTE --- */
         .history-section {
             width: 92%;
             max-width: 700px;
             margin: 40px auto;
-            background: white;
-            padding: 20px;
+            background: #080B12;
+            padding: 25px;
             border-radius: 20px;
-            border: 2px solid var(--leaf-green);
+            border: 3px solid var(--vibrant-fucsia);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { background: var(--forest-dark); color: white; padding: 10px; text-align: left; border-radius: 5px 0 0 0; }
-        td { padding: 10px; border-bottom: 1px solid #eee; }
-        tr:nth-child(even) { background: #f2f9f4; }
+        .history-section h3 {
+            color: var(--vibrant-purpura);
+            margin-top: 0;
+            text-align: center;
+            font-size: 22px;
+            text-shadow: 0 0 10px var(--vibrant-purpura);
+        }
 
-        .btn-back { width: 100%; padding: 12px; margin-top: 20px; background: var(--lavender); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
 
-        footer { margin-top: auto; padding: 25px; text-align: center; font-size: 13px; color: #7f8c8d; }
+        th {
+            background: var(--table-head-bg);
+            color: var(--vibrant-cian);
+            padding: 12px;
+            text-align: left;
+            border-radius: 5px 5px 0 0;
+            font-size: 16px;
+            text-shadow: 0 0 5px var(--vibrant-cian);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(241, 241, 241, 0.1);
+            font-size: 14px;
+            color: #D6DBDF;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(30, 86, 49, 0.05); /* Sutil fondo de fila verde neón */
+        }
+
+        tr:hover {
+            background: rgba(255, 0, 255, 0.1); /* Efecto hover fucsia */
+        }
+
+        @media (max-width: 360px) {
+            .search-input {
+                font-size: 16px;
+                padding-left: 50px;
+            }
+            .search-lupa {
+                font-size: 20px;
+                left: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo"><h1>TU MUNDO</h1></div>
+        <div class="logo-container">
+            <h1>TU MUNDO</h1>
+        </div>
     </header>
 
-    <div class="main">
-        <div class="search-box" id="box-ui">
-            <img src="https://cdn-icons-png.flaticon.com/512/185/185801.png" class="flower-logo">
-            <input type="text" id="query" class="input-style" placeholder="¿Qué descubriremos hoy?">
-            
-            <div class="tabs">
-                <button class="tab active" onclick="setTab(this, 'todo')">TODO</button>
-                <button class="tab" onclick="setTab(this, 'images')">IMÁGENES</button>
-                <button class="tab" onclick="setTab(this, 'videos')">VIDEOS</button>
-                <button class="tab" onclick="setTab(this, 'news')">NOTICIAS</button>
+    <div id="main-content" class="search-area">
+        <div id="search-view">
+            <span class="flower-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/185/185801.png" alt="Margarita Real">
+            </span>
+            <div class="search-input-wrapper">
+                <span class="search-lupa">🔍</span>
+                <input type="text" id="user-input" class="search-input" placeholder="¿Qué descubriremos hoy?">
             </div>
 
-            <button class="btn-buscar" id="go">BUSCAR</button>
+            <div class="tabs">
+                <button class="tab active" data-type="TODO">TODO</button>
+                <button class="tab" data-type="IMÁGENES">IMÁGENES</button>
+                <button class="tab" data-type="VIDEOS">VIDEOS</button>
+                <button class="tab" data-type="NOTICIAS">NOTICIAS</button>
+            </div>
+
+            <button class="btn-buscar" id="btn-buscar">BUSCAR</button>
         </div>
 
-        <div id="results-area">
-            <h2 id="res-title" style="color:var(--forest-dark);"></h2>
-            <div id="res-content"></div>
-            <button class="btn-back" onclick="location.reload()">Regresar</button>
+        <div id="results-container">
+            <h2 id="results-title">Viendo TODO de: <span id="search-term"></span></h2>
+            <div id="results-list">
+                </div>
+            <button class="btn-volver" id="btn-volver">Regresar 🌿</button>
         </div>
     </div>
 
     <div class="history-section">
-        <h3 style="color: var(--ocean-blue); margin-top:0;">📜 Historial de Búsqueda</h3>
+        <h3>📜 Historial de Búsqueda</h3>
         <table>
             <thead>
                 <tr>
                     <th>Búsqueda</th>
-                    <th>Tipo</th>
+                    <th>Categoría</th>
                 </tr>
             </thead>
             <tbody id="history-body">
@@ -175,60 +387,102 @@
         </table>
     </div>
 
-    <footer>Tu Mundo - Naturaleza & Historial 🌿</footer>
+    <footer>
+        <p>Tu Mundo Independiente - Online VIBRANTE © 2026</p>
+    </footer>
 
     <script>
-        let currentTab = 'todo';
-        let history = [];
-
-        function setTab(el, type) {
-            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            currentTab = type;
-        }
-
-        const btn = document.getElementById('go');
-        const box = document.getElementById('box-ui');
-        const area = document.getElementById('results-area');
-        const list = document.getElementById('res-content');
-        const val = document.getElementById('query');
+        const body = document.body;
+        const tabs = document.querySelectorAll('.tab');
+        const btnBuscar = document.getElementById('btn-buscar');
+        const searchView = document.getElementById('search-view');
+        const resultsContainer = document.getElementById('results-container');
+        const resultsList = document.getElementById('results-list');
+        const searchTermDisplay = document.getElementById('search-term');
+        const userInput = document.getElementById('user-input');
+        const btnVolver = document.getElementById('btn-volver');
         const historyBody = document.getElementById('history-body');
 
-        btn.addEventListener('click', () => {
-            const txt = val.value.trim();
-            if(!txt) return alert("Escribe algo 🌿");
+        // Manejar las pestañas activas
+        let activeTab = "TODO";
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelector('.tab.active').classList.remove('active');
+                tab.classList.add('active');
+                activeTab = tab.getAttribute('data-type');
+            });
+        });
 
-            // Guardar en historial
-            const newRow = `<tr><td>${txt}</td><td>${currentTab.toUpperCase()}</td></tr>`;
-            historyBody.innerHTML = newRow + historyBody.innerHTML;
-
-            box.style.display = "none";
-            area.style.display = "block";
-            document.getElementById('res-title').innerText = "Viendo " + currentTab + " de: " + txt;
-
-            if(currentTab === 'todo') {
-                list.innerHTML = `<div class="news-item"><h3>Información de ${txt}</h3><p>Resultados generales sobre tu búsqueda en Tu Mundo.</p></div>`;
-            } 
-            else if(currentTab === 'images') {
-                list.innerHTML = `<div class="grid">
-                    <img src="https://picsum.photos/seed/${txt}1/300/200">
-                    <img src="https://picsum.photos/seed/${txt}2/300/200">
-                </div>`;
+        // FUNCIÓN DE BÚSQUEDA INDEPENDIENTE Y VIBRANTE
+        function realizarBusqueda() {
+            const query = userInput.value;
+            if (query.trim() === "") {
+                alert("Escribe algo para buscar en tu mundo 🌿");
+                return;
             }
-            else if(currentTab === 'videos') {
-                list.innerHTML = `<div class="news-item"><h4>▶ Reproducir: ${txt}</h4><p>Video de alta calidad sobre el tema.</p></div>`;
-            }
-            else if(currentTab === 'news') {
-                list.innerHTML = `
-                    <div class="news-item">
-                        <h4 style="margin:0; color:var(--ocean-blue)">Última hora: Novedades sobre ${txt}</h4>
-                        <p style="font-size:14px">Se reportan nuevos avances y tendencias globales relacionadas con ${txt} este mediodía.</p>
+
+            // Ocultar buscador y mostrar resultados
+            searchView.style.display = "none";
+            resultsContainer.style.display = "block";
+            searchTermDisplay.innerText = query;
+
+            // Limpiar resultados anteriores
+            resultsList.innerHTML = "";
+
+            // Generar resultados independientes simulados
+            let resultadosHtml = "";
+            if (activeTab === "TODO") {
+                resultadosHtml = `
+                    <div class="result-item">
+                        <span>tu-mundo.online/info</span>
+                        <h3>Descubriendo ${query}</h3>
+                        <p>Información detallada e independiente sobre ${query} y su impacto en nuestro ecosistema moderno.</p>
                     </div>
-                    <div class="news-item">
-                        <h4 style="margin:0; color:var(--ocean-blue)">${txt} en la comunidad online</h4>
-                        <p style="font-size:14px">Expertos analizan el impacto de ${txt} en la sociedad moderna.</p>
-                    </div>`;
+                `;
+            } else if (activeTab === "IMÁGENES") {
+                resultadosHtml = `
+                    <div class="result-item">
+                        <span>tu-mundo.online/fotos</span>
+                        <h3>Galería de ${query}</h3>
+                        <p>No se encontraron imágenes directas para ${query} en esta simulación independiente.</p>
+                    </div>
+                `;
+            } else if (activeTab === "VIDEOS") {
+                resultadosHtml = `
+                    <div class="result-item">
+                        <span>tu-mundo.online/clips</span>
+                        <h3>Videos sobre ${query}</h3>
+                        <p>Viendo clips independientes relacionados con ${query}.</p>
+                    </div>
+                `;
+            } else if (activeTab === "NOTICIAS") {
+                resultadosHtml = `
+                    <div class="result-item">
+                        <span>tu-mundo.online/noticias</span>
+                        <h3>Últimas sobre ${query}</h3>
+                        <p>Reportes dinámicos sobre las tendencias de ${query} en la comunidad online.</p>
+                    </div>
+                `;
             }
+            resultsList.innerHTML = resultadosHtml;
+
+            // Guardar en la tabla de historial
+            const newHistoryRow = `
+                <tr>
+                    <td>${query}</td>
+                    <td>${activeTab}</td>
+                </tr>
+            `;
+            // Insertar al inicio para ver la más reciente primero
+            historyBody.innerHTML = newHistoryRow + historyBody.innerHTML;
+        }
+
+        btnBuscar.addEventListener('click', realizarBusqueda);
+
+        // Volver al buscador
+        btnVolver.addEventListener('click', () => {
+            resultsContainer.style.display = "none";
+            searchView.style.display = "block";
         });
     </script>
 </body>
