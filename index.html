@@ -3,398 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Buscador Independiente (Neón Forzado)</title>
+    <title>Tu Mundo - Neón Experiencia Total</title>
     <style>
-        /* --- ESQUEMA DE COLORES NEÓN VIBRANTE FORZADO (Solo Modo Oscuro) --- */
-        :root {
-            /* Degradado de la cabecera: Azul Neón a Púrpura Neón */
-            --gradient-start: #00FFFF; /* Cian Neón */
-            --gradient-end: #FF00FF; /* Fucsia Neón */
-            /* Elementos: Lavanda Neón y Verde Lima Eléctrico */
-            --vibrant-fucsia: #FF00FF; /* Fucsia Neón */
-            --vibrant-cian: #00FFFF; /* Cian Neón */
-            --vibrant-verde: #39FF14; /* Verde Lima Eléctrico */
-            --vibrant-amarillo: #FFFF00; /* Amarillo Neón */
-            --vibrant-purpura: #BF40BF; /* Púrpura Lavanda */
+        /* RESET TOTAL PARA EVITAR BLANCOS */
+        * { background-color: transparent; }
+        html, body { 
+            background-color: #000000 !important; 
+            margin: 0; 
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-            /* Fondo muy oscuro FORZADO por defecto */
-            --bg: #0C0F1A; 
-            /* Texto claro natural */
-            --text: #F1F1F1; 
-            /* Fondo de tarjeta oscuro */
-            --card-bg: rgba(26, 32, 44, 0.98); 
-            /* Fondo de cabecera de tabla */
-            --table-head-bg: #080B12;
+        :root {
+            --negro: #000000;
+            --fucsia: #FF00FF;
+            --cian: #00FFFF;
+            --verde: #39FF14;
+            --amarillo: #FFFF00;
         }
 
         body {
-            margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            transition: 0.3s;
+            color: var(--cian);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            /* Textura de fondo sutil neón */
-            background-image: url('https://www.transparenttextures.com/patterns/dark-dot-2.png');
         }
 
+        /* CABECERA */
         header {
             width: 100%;
-            padding: 70px 0;
-            /* Nuevo degradado neón */
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 40px 0;
+            background-color: #000;
+            border-bottom: 4px solid var(--fucsia);
             text-align: center;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.4);
-            border-bottom: 5px solid var(--vibrant-verde);
+            box-shadow: 0 0 30px var(--fucsia);
         }
 
-        .logo-container h1 {
-            font-size: clamp(40px, 10vw, 80px);
+        header h1 {
+            color: var(--amarillo);
+            font-size: 45px;
+            text-shadow: 4px 4px var(--fucsia);
             margin: 0;
-            /* Nuevo color de logo amarillo neón */
-            color: var(--vibrant-amarillo);
-            /* Sombra de texto potente lavanda */
-            text-shadow: 4px 4px 0px var(--vibrant-fucsia);
             letter-spacing: 5px;
-            font-weight: 900;
         }
 
-        .search-area {
+        /* CONTROLES DE MÚSICA */
+        .music-player {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid var(--verde);
+            border-radius: 10px;
+            color: var(--verde);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* BUSCADOR */
+        .main-content {
             width: 90%;
-            max-width: 700px;
-            background: var(--card-bg);
-            margin-top: -45px;
+            max-width: 650px;
+            margin-top: 40px;
+            background-color: #000;
+        }
+
+        .search-card {
+            border: 3px solid var(--verde);
             padding: 40px;
-            border-radius: 50px;
-            border: 3px solid var(--vibrant-verde);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 30px;
             text-align: center;
+            box-shadow: 0 0 20px var(--verde);
+            background-color: #050505;
         }
 
-        /* --- IMAGEN DE FLOR FOTORREALISTA (MARGARITA) --- */
-        .flower-icon {
-            margin-bottom: 20px;
-            display: block;
-            animation: bounce 2s infinite;
-        }
-
-        .flower-icon img {
-            width: 100px;
-            height: auto;
-            border-radius: 50%;
-            box-shadow: 0 4px 15px var(--vibrant-purpura); /* Sombra púrpura neón */
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .search-input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-lupa {
-            position: absolute;
-            left: 20px;
-            font-size: 24px;
-            color: var(--vibrant-fucsia);
-            transition: 0.3s;
-            pointer-events: none;
-        }
-
-        .search-input {
+        input {
             width: 100%;
-            padding: 15px 20px 15px 55px;
-            font-size: 18px;
+            background: #000;
+            border: 2px solid var(--cian);
+            padding: 18px;
+            color: var(--amarillo);
+            font-size: 20px;
             border-radius: 50px;
-            border: 3px solid var(--vibrant-fucsia);
             outline: none;
-            background: #080B12; /* Fondo de entrada oscuro */
-            color: var(--vibrant-cian); /* Texto cian neón */
             box-sizing: border-box;
+            box-shadow: inset 0 0 10px var(--cian);
+        }
+
+        button.btn-main {
+            margin-top: 25px;
+            background: var(--fucsia);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 0 20px var(--fucsia);
             transition: 0.3s;
         }
 
-        .search-input:focus {
-            border-color: var(--vibrant-cian);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-        }
+        button.btn-main:hover { transform: scale(1.05); filter: brightness(1.2); }
 
-        .tabs {
-            margin: 25px 0;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            padding: 12px 25px;
-            border: 2px solid var(--vibrant-cian); /* Borde cian neón */
-            background: transparent;
-            color: var(--vibrant-cian);
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease, transform 0.1s;
-        }
-
-        .tab:hover {
-            background: rgba(0, 255, 255, 0.1);
-        }
-
-        .tab.active {
-            background: var(--vibrant-fucsia); /* Fondo fucsia neón activa */
-            border-color: var(--vibrant-fucsia);
-            color: white;
-            box-shadow: 0 0 15px var(--vibrant-fucsia);
-        }
-
-        .tab:active {
-            transform: scale(0.95);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        .btn-buscar {
-            background: var(--vibrant-verde); /* Verde lima eléctrico */
-            color: #0C0F1A; /* Texto oscuro para contraste */
-            padding: 18px 60px;
-            font-size: 26px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 900;
-            letter-spacing: 2px;
-            box-shadow: 0 10px 0px #229954; /* Sombra verde oscuro definida */
-            transition: all 0.1s;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .btn-buscar:hover {
-            background: #4FFF3D;
-        }
-
-        .btn-buscar:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0px #229954;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 40px;
-            font-weight: bold;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            background: linear-gradient(135deg, var(--gradient-end), var(--gradient-start));
-            color: #0C0F1A;
-            border-top: 5px solid var(--vibrant-verde);
-        }
-
-        /* SECCIÓN DE RESULTADOS */
-        #results-container {
-            display: none; /* Oculto al inicio */
-            background: var(--card-bg);
+        /* PANEL DE RESULTADOS */
+        #display-results {
+            display: none;
             margin-top: 20px;
+            border: 2px solid var(--cian);
             padding: 30px;
             border-radius: 20px;
-            border: 3px solid var(--vibrant-fucsia);
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            background-color: #050505;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
         }
 
-        #results-title {
-            color: var(--vibrant-fucsia);
-            margin-top: 0;
-            text-shadow: 0 0 10px var(--vibrant-fucsia);
+        .gallery {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
         }
 
-        #search-term {
-            color: var(--vibrant-amarillo);
-            text-shadow: 0 0 10px var(--vibrant-amarillo);
+        .gallery img {
+            width: 250px;
+            height: 180px;
+            border: 3px solid var(--amarillo);
+            border-radius: 15px;
+            object-fit: cover;
+            flex-shrink: 0;
         }
 
-        .result-item {
+        .info-block {
             margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(241, 241, 241, 0.2);
+            padding-left: 15px;
+            border-left: 3px solid var(--fucsia);
+            background-color: transparent;
         }
 
-        .result-item h3 { color: var(--vibrant-verde); margin: 0; font-size: 20px; text-shadow: 0 0 10px var(--vibrant-verde); }
-        .result-item p { font-size: 16px; margin: 8px 0; color: #D6DBDF; }
-        .result-item span { color: var(--vibrant-purpura); font-size: 14px; text-shadow: 0 0 5px var(--vibrant-purpura); }
-
-        .btn-volver {
-            margin-top: 15px;
-            background: var(--vibrant-purpura);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            font-size: 18px;
-            box-shadow: 0 5px 0px #8F308F;
-            transition: all 0.1s;
-        }
-
-        .btn-volver:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0px #8F308F;
-        }
-
-        /* --- TABLA DE HISTORIAL VIBRANTE --- */
-        .history-section {
-            width: 92%;
-            max-width: 700px;
-            margin: 40px auto;
-            background: #080B12;
-            padding: 25px;
-            border-radius: 20px;
-            border: 3px solid var(--vibrant-fucsia);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .history-section h3 {
-            color: var(--vibrant-purpura);
-            margin-top: 0;
-            text-align: center;
-            font-size: 22px;
-            text-shadow: 0 0 10px var(--vibrant-purpura);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th {
-            background: var(--table-head-bg);
-            color: var(--vibrant-cian);
-            padding: 12px;
-            text-align: left;
-            border-radius: 5px 5px 0 0;
-            font-size: 16px;
-            text-shadow: 0 0 5px var(--vibrant-cian);
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(241, 241, 241, 0.1);
-            font-size: 14px;
-            color: #D6DBDF;
-        }
-
-        tr:nth-child(even) {
-            background: rgba(30, 86, 49, 0.05); /* Sutil fondo de fila verde neón */
-        }
-
-        tr:hover {
-            background: rgba(255, 0, 255, 0.1); /* Efecto hover fucsia */
-        }
-
-        @media (max-width: 360px) {
-            .search-input {
-                font-size: 16px;
-                padding-left: 50px;
-            }
-            .search-lupa {
-                font-size: 20px;
-                left: 15px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo-container">
-            <h1>TU MUNDO</h1>
-        </div>
-    </header>
-
-    <div id="main-content" class="search-area">
-        <div id="search-view">
-            <span class="flower-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/185/185801.png" alt="Margarita Real">
-            </span>
-            <div class="search-input-wrapper">
-                <span class="search-lupa">🔍</span>
-                <input type="text" id="user-input" class="search-input" placeholder="¿Qué descubriremos hoy?">
-            </div>
-
-            <div class="tabs">
-                <button class="tab active" data-type="TODO">TODO</button>
-                <button class="tab" data-type="IMÁGENES">IMÁGENES</button>
-                <button class="tab" data-type="VIDEOS">VIDEOS</button>
-                <button class="tab" data-type="NOTICIAS">NOTICIAS</button>
-            </div>
-
-            <button class="btn-buscar" id="btn-buscar">BUSCAR</button>
-        </div>
-
-        <div id="results-container">
-            <h2 id="results-title">Viendo TODO de: <span id="search-term"></span></h2>
-            <div id="results-list">
-                </div>
-            <button class="btn-volver" id="btn-volver">Regresar 🌿</button>
-        </div>
-    </div>
-
-    <div class="history-section">
-        <h3>📜 Historial de Búsqueda</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Búsqueda</th>
-                    <th>Categoría</th>
-                </tr>
-            </thead>
-            <tbody id="history-body">
-                </tbody>
-        </table>
-    </div>
-
-    <footer>
-        <p>Tu Mundo Independiente - Online VIBRANTE © 2026</p>
-    </footer>
-
-    <script>
-        const tabs = document.querySelectorAll('.tab');
-        const btnBuscar = document.getElementById('btn-buscar');
-        const searchView = document.getElementById('search-view');
-        const resultsContainer = document.getElementById('results-container');
-        const resultsList = document.getElementById('results-list');
-        const searchTermDisplay = document.getElementById('search-term');
-        const resultsTitleDisplay = document.getElementById('results-title');
-        const userInput = document.getElementById('user-input');
-        const btnVolver = document.getElementById('btn-volver');
-        const historyBody = document.getElementById('history-body');
-
-        // Manejar las pestañas activas
-        let activeTabType = "TODO";
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Quitar activa de la actual
-                document.querySelector('.tab.active').classList.remove('active');
-                // Poner activa a la clickeada
-                tab.classList.add('active');
-                // Guardar tipo
-                activeTabType = tab.getAttribute('data-type');
-            });
-        });
-
-        // FUNCIÓN DE BÚSQUEDA ARREGLADA (Ahora genera resultados)
-        function realizarBusqueda() {
-            const query = userInput.value;
-            if (query.trim() === "") {
-                alert("Escribe algo para buscar en tu mundo 🌿");
+        .info-block h2 { color: var(--verde); text-transform: uppercase; margin-bottom: 5px; }
+        .info-block p { color
