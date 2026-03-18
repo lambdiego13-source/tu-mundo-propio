@@ -7,97 +7,271 @@
     <link rel="icon" type="image/png" href="icono.png">
     <style>
         :root {
-            --fucsia: #FF00FF; --azul-claro: #00FFFF; --verde: #8BE34A;
-            --bg-color: #ffffff; --text-color: #333; --card-bg: rgba(255, 255, 255, 0.95);
+            --fucsia: #FF00FF;
+            --azul-claro: #00FFFF;
+            --verde: #8BE34A;
+            --bg-color: #ffffff;
+            --text-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.95);
             --lupa-color: #FF00FF;
         }
-        .dark-mode {
-            --bg-color: #121212; --text-color: #f0f0f0;
-            --card-bg: rgba(30, 30, 30, 0.98); --azul-claro: #00d1d1;
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: rgba(30, 30, 30, 0.98);
+            --azul-claro: #00d1d1;
             --lupa-color: #00FFFF;
         }
+
         body {
-            margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg-color); color: var(--text-color);
-            transition: 0.5s; display: flex; flex-direction: column;
-            align-items: center; min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
             background-image: url('https://www.transparenttextures.com/patterns/floral-pnt.png');
         }
+
         .theme-toggle {
-            position: absolute; top: 25px; right: 25px; background: var(--verde);
-            border: none; width: 50px; height: 50px; border-radius: 50%;
-            cursor: pointer; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex; align-items: center; justify-content: center; z-index: 100;
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: var(--verde);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: transform 0.1s; /* Preparar para efecto clic */
         }
+
+        /* Efecto clic para el interruptor de tema */
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
         header {
-            width: 100%; padding: 70px 0;
+            width: 100%;
+            padding: 70px 0;
             background: linear-gradient(135deg, var(--fucsia), var(--azul-claro));
-            text-align: center; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
             border-bottom: 5px solid var(--verde);
         }
+
         .logo-container h1 {
-            font-size: clamp(40px, 10vw, 80px); margin: 0; color: white;
-            text-shadow: 4px 4px 0px var(--fucsia); letter-spacing: 5px; font-weight: 900;
+            font-size: clamp(40px, 10vw, 80px);
+            margin: 0;
+            color: white;
+            text-shadow: 4px 4px 0px var(--fucsia);
+            letter-spacing: 5px;
+            font-weight: 900;
         }
+
         .search-area {
-            width: 90%; max-width: 700px; background: var(--card-bg);
-            margin-top: -45px; padding: 40px; border-radius: 50px;
-            border: 4px solid var(--verde); box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 700px;
+            background: var(--card-bg);
+            margin-top: -45px;
+            padding: 40px;
+            border-radius: 50px;
+            border: 3px solid var(--verde);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             text-align: center;
         }
-        .flower-icon { font-size: 50px; margin-bottom: 20px; display: block; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .search-input-wrapper { position: relative; display: flex; align-items: center; }
-        .search-lupa { position: absolute; left: 20px; font-size: 24px; color: var(--lupa-color); transition: 0.3s; pointer-events: none; }
-        .search-input {
-            width: 100%; padding: 22px 30px 22px 60px; font-size: 22px;
-            border-radius: 40px; border: 3px solid var(--azul-claro); outline: none;
-            background: var(--bg-color); color: var(--text-color); box-sizing: border-box; transition: 0.3s;
+
+        .flower-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 2s infinite;
         }
-        .search-input:focus { border-color: var(--fucsia); box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
-        .tabs { margin: 25px 0; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-        .tab { padding: 12px 25px; border: 2px solid var(--fucsia); background: transparent; color: var(--fucsia); border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .tab.active { background: var(--fucsia); color: white; }
-        .btn-buscar { background: var(--verde); color: white; padding: 18px 60px; font-size: 26px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; box-shadow: 0 6px 0 #5a8a2a; transition: 0.2s; }
-        .btn-buscar:active { transform: translateY(4px); box-shadow: none; }
-        footer { margin-top: auto; padding: 40px; font-weight: bold; text-align: center; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-lupa {
+            position: absolute;
+            left: 20px;
+            font-size: 24px;
+            color: var(--lupa-color);
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        /* --- AJUSTES PARA QUE ENTRE EL TEXTO --- */
+        .search-input {
+            width: 100%;
+            /* Relleno ajustado: menos arriba/abajo, y menos a la izquierda para el texto */
+            padding: 15px 20px 15px 55px;
+            /* Tamaño de fuente reducido para que quepa el texto largo */
+            font-size: 18px;
+            border-radius: 50px;
+            border: 3px solid var(--fucsia);
+            outline: none;
+            background: var(--bg-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--fucsia);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+        }
+
+        .tabs {
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            border: 2px solid var(--fucsia);
+            background: transparent;
+            color: var(--fucsia);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease, transform 0.1s; /* Añadido transform para efecto clic */
+        }
+
+        .tab:hover {
+            background: rgba(255, 0, 255, 0.1);
+        }
+
+        .tab.active {
+            background: var(--fucsia);
+            color: white;
+        }
+
+        /* --- EFECTO CLIC (TÍN) PARA BOTONES DE PESTAÑA --- */
+        .tab:active {
+            transform: scale(0.95); /* Se encoge ligeramente */
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); /* Sombra interior opcional para profundidad */
+        }
+
+        .btn-buscar {
+            background: var(--verde);
+            color: white;
+            padding: 18px 60px;
+            font-size: 26px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 900;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 0px #6eb13a;
+            transition: all 0.1s; /* Transición rápida para el efecto clic */
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-buscar:hover {
+            background: #9bed5a;
+        }
+
+        /* --- EFECTO CLIC (TÍN) PARA EL BOTÓN BUSCAR --- */
+        .btn-buscar:active {
+            transform: translateY(4px); /* Se mueve hacia abajo */
+            box-shadow: 0 4px 0px #6eb13a; /* Reduce la sombra 3D */
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Ajuste responsivo extra para pantallas muy pequeñas */
+        @media (max-width: 360px) {
+            .search-input {
+                font-size: 16px;
+                padding-left: 50px;
+            }
+            .search-lupa {
+                font-size: 20px;
+                left: 15px;
+            }
+        }
     </style>
 </head>
-<body id="body">
-    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
-    <header><div class="logo-container"><h1>TU MUNDO</h1></div></header>
+<body>
+
+    <button class="theme-toggle" id="theme-toggle">🌓</button>
+
+    <header>
+        <div class="logo-container">
+            <h1>TU MUNDO</h1>
+        </div>
+    </header>
+
     <div class="search-area">
-        <span class="flower-icon" id="flower">🌸</span>
-        <form action="https://searx.be/search" method="GET">
-            <div class="search-input-wrapper">
-                <input type="text" name="q" class="search-input" placeholder="¿Qué descubriremos hoy?" required>
-                <span class="search-lupa">🔍</span>
-            </div>
-            <input type="hidden" name="categories" id="cat_input" value="general">
-            <div class="tabs">
-                <button type="button" class="tab active" onclick="setCat('general', this)">TODO</button>
-                <button type="button" class="tab" onclick="setCat('images', this)">IMÁGENES</button>
-                <button type="button" class="tab" onclick="setCat('videos', this)">VIDEOS</button>
-                <button type="button" class="tab" onclick="setCat('news', this)">NOTICIAS</button>
-            </div>
-            <button type="submit" class="btn-buscar">BUSCAR</button>
-        </form>
+        <span class="flower-icon">🌼</span>
+        <div class="search-input-wrapper">
+            <span class="search-lupa">🔍</span>
+            <input type="text" class="search-input" placeholder="¿Qué descubriremos hoy?">
+        </div>
+
+        <div class="tabs">
+            <button class="tab active">TODO</button>
+            <button class="tab">IMÁGENES</button>
+            <button class="tab">VIDEOS</button>
+            <button class="tab">NOTICIAS</button>
+        </div>
+
+        <button class="btn-buscar">BUSCAR</button>
     </div>
-    <footer><p>TU MUNDO &copy; 2026 | Privacidad y Libertad</p></footer>
+
+    <footer>
+        <p>Tu Mundo - Buscador Libre © 2023</p>
+    </footer>
+
     <script>
-        const listaFlores = ["🌸", "🌺", "🌻", "🌼", "🌷", "🌹", "🏵️", "🍀", "🌵"];
-        document.getElementById('flower').innerText = listaFlores[Math.floor(Math.random() * listaFlores.length)];
-        function setCat(tipo, boton) {
-            document.getElementById('cat_input').value = tipo;
-            document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-            boton.classList.add('active');
-        }
-        function toggleTheme() {
-            const body = document.getElementById('body');
-            body.classList.toggle('dark-mode');
-            localStorage.setItem('userTheme', body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
-        if(localStorage.getItem('userTheme') === 'dark') document.getElementById('body').classList.add('dark-mode');
+        // Script simple para cambiar el tema y manejar las pestañas activas
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const tabs = document.querySelectorAll('.tab');
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelector('.tab.active').classList.remove('active');
+                tab.classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>
