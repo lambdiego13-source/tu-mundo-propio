@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Buscador Independiente VIBRANTE</title>
+    <title>Tu Mundo - Buscador Independiente (Neón Forzado)</title>
     <style>
-        /* --- NUEVO ESQUEMA DE COLORES VIBRANTES (NEÓN NATURALEZA) --- */
+        /* --- ESQUEMA DE COLORES NEÓN VIBRANTE FORZADO (Solo Modo Oscuro) --- */
         :root {
             /* Degradado de la cabecera: Azul Neón a Púrpura Neón */
             --gradient-start: #00FFFF; /* Cian Neón */
@@ -17,7 +17,7 @@
             --vibrant-amarillo: #FFFF00; /* Amarillo Neón */
             --vibrant-purpura: #BF40BF; /* Púrpura Lavanda */
 
-            /* Fondo muy oscuro para que los colores resalten */
+            /* Fondo muy oscuro FORZADO por defecto */
             --bg: #0C0F1A; 
             /* Texto claro natural */
             --text: #F1F1F1; 
@@ -39,29 +39,6 @@
             min-height: 100vh;
             /* Textura de fondo sutil neón */
             background-image: url('https://www.transparenttextures.com/patterns/dark-dot-2.png');
-        }
-
-        .theme-toggle {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: var(--vibrant-purpura);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            transition: transform 0.1s;
-        }
-
-        .theme-toggle:active {
-            transform: scale(0.95);
         }
 
         header {
@@ -252,7 +229,7 @@
 
         .result-item h3 { color: var(--vibrant-verde); margin: 0; font-size: 20px; text-shadow: 0 0 10px var(--vibrant-verde); }
         .result-item p { font-size: 16px; margin: 8px 0; color: #D6DBDF; }
-        .result-item span { color: var(--vibrant- purpura); font-size: 14px; text-shadow: 0 0 5px var(--vibrant-purpura); }
+        .result-item span { color: var(--vibrant-purpura); font-size: 14px; text-shadow: 0 0 5px var(--vibrant-purpura); }
 
         .btn-volver {
             margin-top: 15px;
@@ -392,98 +369,32 @@
     </footer>
 
     <script>
-        const body = document.body;
         const tabs = document.querySelectorAll('.tab');
         const btnBuscar = document.getElementById('btn-buscar');
         const searchView = document.getElementById('search-view');
         const resultsContainer = document.getElementById('results-container');
         const resultsList = document.getElementById('results-list');
         const searchTermDisplay = document.getElementById('search-term');
+        const resultsTitleDisplay = document.getElementById('results-title');
         const userInput = document.getElementById('user-input');
         const btnVolver = document.getElementById('btn-volver');
         const historyBody = document.getElementById('history-body');
 
         // Manejar las pestañas activas
-        let activeTab = "TODO";
+        let activeTabType = "TODO";
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
+                // Quitar activa de la actual
                 document.querySelector('.tab.active').classList.remove('active');
+                // Poner activa a la clickeada
                 tab.classList.add('active');
-                activeTab = tab.getAttribute('data-type');
+                // Guardar tipo
+                activeTabType = tab.getAttribute('data-type');
             });
         });
 
-        // FUNCIÓN DE BÚSQUEDA INDEPENDIENTE Y VIBRANTE
+        // FUNCIÓN DE BÚSQUEDA ARREGLADA (Ahora genera resultados)
         function realizarBusqueda() {
             const query = userInput.value;
             if (query.trim() === "") {
                 alert("Escribe algo para buscar en tu mundo 🌿");
-                return;
-            }
-
-            // Ocultar buscador y mostrar resultados
-            searchView.style.display = "none";
-            resultsContainer.style.display = "block";
-            searchTermDisplay.innerText = query;
-
-            // Limpiar resultados anteriores
-            resultsList.innerHTML = "";
-
-            // Generar resultados independientes simulados
-            let resultadosHtml = "";
-            if (activeTab === "TODO") {
-                resultadosHtml = `
-                    <div class="result-item">
-                        <span>tu-mundo.online/info</span>
-                        <h3>Descubriendo ${query}</h3>
-                        <p>Información detallada e independiente sobre ${query} y su impacto en nuestro ecosistema moderno.</p>
-                    </div>
-                `;
-            } else if (activeTab === "IMÁGENES") {
-                resultadosHtml = `
-                    <div class="result-item">
-                        <span>tu-mundo.online/fotos</span>
-                        <h3>Galería de ${query}</h3>
-                        <p>No se encontraron imágenes directas para ${query} en esta simulación independiente.</p>
-                    </div>
-                `;
-            } else if (activeTab === "VIDEOS") {
-                resultadosHtml = `
-                    <div class="result-item">
-                        <span>tu-mundo.online/clips</span>
-                        <h3>Videos sobre ${query}</h3>
-                        <p>Viendo clips independientes relacionados con ${query}.</p>
-                    </div>
-                `;
-            } else if (activeTab === "NOTICIAS") {
-                resultadosHtml = `
-                    <div class="result-item">
-                        <span>tu-mundo.online/noticias</span>
-                        <h3>Últimas sobre ${query}</h3>
-                        <p>Reportes dinámicos sobre las tendencias de ${query} en la comunidad online.</p>
-                    </div>
-                `;
-            }
-            resultsList.innerHTML = resultadosHtml;
-
-            // Guardar en la tabla de historial
-            const newHistoryRow = `
-                <tr>
-                    <td>${query}</td>
-                    <td>${activeTab}</td>
-                </tr>
-            `;
-            // Insertar al inicio para ver la más reciente primero
-            historyBody.innerHTML = newHistoryRow + historyBody.innerHTML;
-        }
-
-        btnBuscar.addEventListener('click', realizarBusqueda);
-
-        // Volver al buscador
-        btnVolver.addEventListener('click', () => {
-            resultsContainer.style.display = "none";
-            searchView.style.display = "block";
-        });
-    </script>
-</body>
-</html>
