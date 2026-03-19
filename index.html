@@ -3,103 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Inteligencia Neón</title>
+    <title>Tu Mundo - Experiencia Total</title>
     <style>
-        /* CONFIGURACIÓN DE VISIBILIDAD TOTAL */
+        /* ESTILO NEÓN ALTA VISIBILIDAD */
         html, body {
             background-color: #000000 !important;
-            margin: 0;
-            padding: 0;
-            color: #ffffff;
+            margin: 0; padding: 0; color: #ffffff;
             font-family: 'Segoe UI', sans-serif;
         }
 
-        header {
-            border-bottom: 4px solid #FF00FF;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 0 20px #FF00FF;
-        }
+        header { border-bottom: 4px solid #FF00FF; padding: 20px; text-align: center; }
+        h1 { color: #FFFF00; text-shadow: 0 0 15px #FF00FF; font-size: 32px; margin: 0; }
 
-        h1 {
-            color: #FFFF00 !important;
-            font-size: 38px;
-            text-shadow: 2px 2px #00FFFF;
-            margin: 0;
-        }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
 
-        .container {
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .search-box {
-            border: 3px solid #39FF14;
-            background-color: #050505;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
+        .card-main {
+            border: 3px solid #39FF14; background-color: #050505;
+            padding: 25px; border-radius: 20px; text-align: center;
             box-shadow: 0 0 15px #39FF14;
         }
 
         input {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            background-color: #000;
-            border: 2px solid #00FFFF;
-            color: #FFFF00;
-            border-radius: 10px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
+            width: 100%; padding: 15px; background: #000; border: 2px solid #00FFFF;
+            color: #FFFF00; border-radius: 10px; font-size: 18px; box-sizing: border-box; margin-bottom: 15px;
         }
 
         button {
-            width: 100%;
-            padding: 15px;
-            background-color: #FF00FF;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 0 10px #FF00FF;
+            width: 100%; padding: 15px; background: #FF00FF; color: white;
+            font-weight: bold; border: none; border-radius: 10px; font-size: 18px; cursor: pointer;
         }
 
-        /* RESULTADOS DINÁMICOS */
-        #panel-resultados {
-            display: none;
-            margin-top: 25px;
+        /* RESULTADOS */
+        #display { display: none; margin-top: 20px; }
+        
+        .btn-voz { background: #39FF14; color: #000; margin-bottom: 15px; }
+
+        .card-info {
+            border-left: 5px solid #00FFFF; padding: 15px; margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.07); border-radius: 0 10px 10px 0;
         }
 
-        .card {
-            background: #0a0a0a;
-            border: 2px solid #00FFFF;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
+        .card-info h3 { color: #39FF14; margin: 0 0 5px 0; font-size: 17px; text-transform: uppercase; }
+        .card-info p { color: #fff; line-height: 1.6; margin: 0; font-size: 16px; }
 
-        .card h2 {
-            color: #39FF14 !important;
-            margin-top: 0;
-            font-size: 22px;
-            border-bottom: 1px solid #333;
-        }
+        .res-img { width: 100%; border: 3px solid #FFFF00; border-radius: 15px; margin-bottom: 15px; }
 
-        .card p {
-            color: #ffffff !important;
-            font-size: 17px;
-            line-height: 1.6;
-        }
-
-        .foto-neon {
-            width: 100%;
-            border: 3px solid #FFFF00;
-            border-radius: 15px;
-            margin-bottom: 20px;
+        /* VIDEOS */
+        .video-container {
+            width: 100%; border: 2px solid #FF00FF; border-radius: 15px;
+            overflow: hidden; margin-top: 15px; box-shadow: 0 0 15px #FF00FF;
         }
     </style>
 </head>
@@ -110,77 +62,86 @@
     </header>
 
     <div class="container">
-        <div id="ui-busqueda" class="search-box">
-            <p style="color: #39FF14; font-weight: bold;">¿Qué quieres aprender hoy?</p>
-            <input type="text" id="inputTema" placeholder="Ej: Perro, Marte, Pizza...">
-            <button onclick="investigar()">INICIAR BÚSQUEDA</button>
+        <div id="setup" class="card-main">
+            <p style="color:#00FFFF; font-weight: bold;">Texto • Imágenes • Voz • Video</p>
+            <input type="text" id="query" placeholder="Ej: Gatos, Luna, Pizza...">
+            <button onclick="investigar()">BUSCAR TODO</button>
         </div>
 
-        <div id="panel-resultados">
-            <h1 id="titulo-tema" style="color: #FF00FF; text-align: center; margin-bottom: 20px;"></h1>
+        <div id="display">
+            <h2 id="res-title" style="color:#FF00FF; text-align:center; font-size: 30px;"></h2>
             
-            <div id="contenedor-fotos"></div>
+            <img id="res-img" class="res-img" src="">
 
-            <div class="card">
-                <h2>Concepto</h2>
-                <p id="res-concepto"></p>
-            </div>
-            <div class="card">
-                <h2>Importancia</h2>
-                <p id="res-importancia"></p>
-            </div>
-            <div class="card">
-                <h2>Historia y Origen</h2>
-                <p id="res-historia"></p>
-            </div>
-            <div class="card">
-                <h2>¿Sabías que?</h2>
-                <p id="res-sabias"></p>
+            <button class="btn-voz" onclick="hablar()">🔊 ESCUCHAR EXPLICACIÓN</button>
+            
+            <div id="texto-completo">
+                <div class="card-info">
+                    <h3>¿Qué es?</h3>
+                    <p id="res-def"></p>
+                </div>
+                <div class="card-info">
+                    <h3>Importancia</h3>
+                    <p id="res-imp"></p>
+                </div>
+                <div class="card-info">
+                    <h3>Dato Curioso</h3>
+                    <p id="res-cur"></p>
+                </div>
             </div>
 
-            <button onclick="location.reload()" style="background-color: #333; border: 1px solid #777;">NUEVA INVESTIGACIÓN</button>
+            <h3 style="color:#39FF14; text-align:center;">📺 VIDEO RELACIONADO</h3>
+            <div class="video-container" id="video-box"></div>
+
+            <button onclick="location.reload()" style="background:#444; margin-top: 20px;">NUEVA BÚSQUEDA</button>
         </div>
     </div>
 
     <script>
+        function hablar() {
+            const texto = document.getElementById('texto-completo').innerText;
+            const mensaje = new SpeechSynthesisUtterance(texto);
+            mensaje.lang = 'es-ES';
+            window.speechSynthesis.speak(mensaje);
+        }
+
         function investigar() {
-            const tema = document.getElementById('inputTema').value.toLowerCase().trim();
-            if(!tema) return alert("Escribe un tema");
+            const t = document.getElementById('query').value.toLowerCase().trim();
+            if(!t) return;
 
-            document.getElementById('ui-busqueda').style.display = 'none';
-            document.getElementById('panel-resultados').style.display = 'block';
-            document.getElementById('titulo-tema').innerText = tema.toUpperCase();
+            document.getElementById('setup').style.display = 'none';
+            document.getElementById('display').style.display = 'block';
+            document.getElementById('res-title').innerText = t.toUpperCase();
+            
+            // Imagen Dinámica
+            document.getElementById('res-img').src = "https://loremflickr.com/600/400/" + t;
 
-            // Carga de Imagen
-            document.getElementById('contenedor-fotos').innerHTML = `<img src="https://loremflickr.com/600/400/${tema}" class="foto-neon">`;
+            // Video Dinámico (YouTube Search)
+            document.getElementById('video-box').innerHTML = `
+                <iframe width="100%" height="315" 
+                src="https://www.youtube.com/embed?listType=search&list=${t}+explicacion+educativa" 
+                frameborder="0" allowfullscreen></iframe>`;
 
-            // Lógica de Respuesta Diferenciada
-            let concepto, importancia, historia, sabias;
+            let d = "", i = "", c = "";
 
-            if(tema.includes("perro") || tema.includes("gato") || tema.includes("caballo")) {
-                concepto = `El ${tema} es un ser vivo que pertenece al reino animal, conocido por su estrecha relación con los humanos.`;
-                importancia = `Son vitales para el ecosistema y ofrecen compañía, seguridad y apoyo emocional a las personas.`;
-                historia = `Fueron domesticados hace miles de años, evolucionando desde especies salvajes para adaptarse a la vida en sociedad.`;
-                sabias = `¿Sabías que los ${tema}s tienen sentidos mucho más desarrollados que los humanos, como el olfato y el oído?`;
-            } 
-            else if(tema.includes("casa") || tema.includes("edificio") || tema.includes("escuela")) {
-                concepto = `Una ${tema} es una estructura arquitectónica diseñada para brindar refugio y seguridad a quienes la habitan.`;
-                importancia = `Es la base de la estabilidad humana, proporcionando un espacio privado para el desarrollo de la familia.`;
-                historia = `Desde las cavernas hasta los rascacielos modernos, la forma de construir una ${tema} ha cambiado con los materiales disponibles.`;
-                sabias = `¿Sabías que existen ${tema}s construidas totalmente con materiales reciclados para proteger el medio ambiente?`;
+            // Lógica de aprendizaje
+            if(t.match(/gato|perro|animal|leon/)) {
+                d = "Es un ser vivo que forma parte del reino animal y el ecosistema.";
+                i = "Mantienen el equilibrio natural y son compañeros del ser humano.";
+                c = "Los animales tienen formas increíbles de comunicarse sin palabras.";
+            } else if(t.match(/luna|espacio|sol|planeta/)) {
+                d = "Es un objeto celeste que existe en el vasto universo.";
+                i = "Nos enseña sobre las leyes de la física y el origen del tiempo.";
+                c = "¡En el espacio el silencio es total porque no hay aire!";
+            } else {
+                d = "Es un tema clave que expande nuestro conocimiento en Tu Mundo.";
+                i = "Aprender sobre esto nos ayuda a entender mejor la realidad.";
+                c = "Tu cerebro se vuelve más fuerte cada vez que investigas algo nuevo.";
             }
-            else {
-                // Respuesta General para otros temas
-                concepto = `${tema} se define como un elemento fundamental en su categoría, influyendo en cómo entendemos nuestro entorno.`;
-                importancia = `Su valor reside en su utilidad práctica y en la forma en que facilita procesos complejos de la vida diaria.`;
-                historia = `El origen de ${tema} se remonta a la necesidad humana de innovar y resolver problemas específicos.`;
-                sabias = `¿Sabías que ${tema} es uno de los términos que más está evolucionando gracias a la tecnología actual?`;
-            }
 
-            document.getElementById('res-concepto').innerText = concepto;
-            document.getElementById('res-importancia').innerText = importancia;
-            document.getElementById('res-historia').innerText = historia;
-            document.getElementById('res-sabias').innerText = sabias;
+            document.getElementById('res-def').innerText = d;
+            document.getElementById('res-imp').innerText = i;
+            document.getElementById('res-cur').innerText = c;
         }
     </script>
 </body>
