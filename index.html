@@ -3,162 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Neón Real</title>
+    <title>Tu Mundo Neon</title>
     <style>
-        /* Forzamos el fondo negro en el nivel más alto */
-        html, body {
-            background-color: #000000 !important;
+        /* FONDO NEGRO TOTAL GARANTIZADO */
+        body {
+            background-color: #000000;
             color: #00FFFF;
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            min-height: 100vh;
-        }
-
-        header {
+            padding: 20px;
             text-align: center;
-            padding: 30px;
-            border-bottom: 3px solid #FF00FF;
-            box-shadow: 0 0 15px #FF00FF;
         }
 
+        /* TITULO BRILLANTE */
         h1 {
             color: #FFFF00;
-            text-shadow: 2px 2px #FF00FF;
-            font-size: 35px;
-            margin: 0;
+            text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
+            font-size: 40px;
         }
 
-        .container {
+        /* CAJA DE BUSQUEDA */
+        .caja {
+            border: 2px solid #39FF14;
             padding: 20px;
-            max-width: 600px;
+            border-radius: 15px;
+            background: #050505;
+            box-shadow: 0 0 15px #39FF14;
+            max-width: 500px;
             margin: auto;
         }
 
-        .search-box {
-            background: #0a0a0a;
-            border: 2px solid #39FF14;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 0 10px #39FF14;
-        }
-
         input {
-            width: 100%;
-            padding: 15px;
-            background: #000;
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
             border: 1px solid #00FFFF;
-            color: #FFFF00;
-            font-size: 18px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
+            background: #000;
+            color: #fff;
+            margin-bottom: 10px;
         }
 
         button {
             background: #FF00FF;
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
             font-weight: bold;
-            border-radius: 8px;
             cursor: pointer;
-            width: 100%;
-            box-shadow: 0 0 10px #FF00FF;
         }
 
-        /* Área de Resultados */
-        #results {
+        /* RESULTADOS */
+        #resultado {
             display: none;
             margin-top: 20px;
-            border: 1px solid #00FFFF;
+            text-align: left;
+            border: 1px solid #FF00FF;
             padding: 15px;
             border-radius: 10px;
         }
 
-        .section { margin-bottom: 20px; }
-        .section h2 { color: #39FF14; font-size: 20px; border-bottom: 1px solid #333; }
-        .section p { color: #ffffff; line-height: 1.5; }
+        h2 { color: #39FF14; border-bottom: 1px solid #333; }
+        p { color: #ffffff; line-height: 1.6; }
 
-        .img-container {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            margin-bottom: 15px;
-        }
-
-        .img-container img {
-            width: 150px;
-            height: 110px;
-            border: 2px solid #FFFF00;
-            border-radius: 5px;
-            object-fit: cover;
-        }
+        .fotos { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 15px; }
+        .fotos img { width: 150px; border: 2px solid #FFFF00; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>TU MUNDO</h1>
-        <p style="color: #39FF14; font-size: 12px;">MODO NEÓN ACTIVADO</p>
-    </header>
+    <h1>TU MUNDO</h1>
+    
+    <div id="buscador" class="caja">
+        <p style="color: #39FF14;">Investigación Neón Independiente</p>
+        <input type="text" id="tema" placeholder="Escribe un tema aquí...">
+        <button onclick="buscar()">EXPLORAR</button>
+    </div>
 
-    <div class="container">
-        <div id="search-ui" class="search-box">
-            <input type="text" id="topic" placeholder="Escribe un tema...">
-            <button onclick="buscar()">EXPLORAR</button>
-        </div>
+    <div id="resultado" class="caja">
+        <h2 id="titulo-res" style="text-align:center; color:#FF00FF;"></h2>
+        
+        <div class="fotos" id="galeria"></div>
 
-        <div id="results">
-            <h2 id="res-title" style="color: #FF00FF; text-align: center;"></h2>
-            
-            <div class="img-container" id="res-imgs"></div>
+        <h2>Concepto</h2>
+        <p id="txt-concepto"></p>
 
-            <div class="section">
-                <h2>Concepto</h2>
-                <p id="p-concepto"></p>
-            </div>
-            <div class="section">
-                <h2>Importancia</h2>
-                <p id="p-importancia"></p>
-            </div>
-            <div class="section">
-                <h2>Historia</h2>
-                <p id="p-historia"></p>
-            </div>
-            <div class="section">
-                <h2>¿Sabías que?</h2>
-                <p id="p-curioso"></p>
-            </div>
+        <h2>Importancia</h2>
+        <p id="txt-importancia"></p>
 
-            <button style="background: #333;" onclick="location.reload()">NUEVA BÚSQUEDA</button>
-        </div>
+        <h2>Historia</h2>
+        <p id="txt-historia"></p>
+
+        <h2>¿Sabías que?</h2>
+        <p id="txt-sabias"></p>
+
+        <button onclick="location.reload()" style="background:#333; width:100%;">VOLVER</button>
     </div>
 
     <script>
         function buscar() {
-            const t = document.getElementById('topic').value;
-            if(!t) return alert("Escribe algo primero");
+            const tema = document.getElementById('tema').value;
+            if(!tema) return alert("Escribe algo");
 
-            document.getElementById('search-ui').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('res-title').innerText = t.toUpperCase();
+            document.getElementById('buscador').style.display = 'none';
+            document.getElementById('resultado').style.display = 'block';
+            document.getElementById('titulo-res').innerText = tema.toUpperCase();
 
-            // Fotos
-            const gal = document.getElementById('res-imgs');
-            gal.innerHTML = `
-                <img src="https://loremflickr.com/320/240/${t}?random=1">
-                <img src="https://loremflickr.com/320/240/${t}?random=2">
-                <img src="https://loremflickr.com/320/240/${t}?random=3">
+            // Fotos Reales
+            document.getElementById('galeria').innerHTML = `
+                <img src="https://loremflickr.com/300/200/${tema}?random=1">
+                <img src="https://loremflickr.com/300/200/${tema}?random=2">
             `;
 
-            // Textos
-            document.getElementById('p-concepto').innerText = `${t} es un concepto clave en el mundo actual, representando innovación y desarrollo.`;
-            document.getElementById('p-importancia').innerText = `La importancia de ${t} radica en cómo facilita la vida cotidiana y el avance tecnológico.`;
-            document.getElementById('p-historia').innerText = `A lo largo de los años, ${t} ha evolucionado desde sus humildes comienzos hasta ser lo que vemos hoy.`;
-            document.getElementById('p-curioso').innerText = `¿Sabías que muchas personas consideran que ${t} cambiará el futuro por completo?`;
+            // Contenido
+            document.getElementById('txt-concepto').innerText = tema + " es un tema esencial que destaca por su diseño y funcionalidad en el mundo moderno.";
+            document.getElementById('txt-importancia').innerText = "Su importancia radica en el impacto positivo que genera en la sociedad y la tecnología.";
+            document.getElementById('txt-historia').innerText = "A través de los años, " + tema + " ha evolucionado para adaptarse a las nuevas necesidades digitales.";
+            document.getElementById('txt-sabias').innerText = "¿Sabías que " + tema + " es uno de los términos más buscados en entornos de aprendizaje independiente?";
         }
     </script>
 </body>
