@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Experiencia Total</title>
+    <title>Tu Mundo - Enciclopedia Total</title>
     <style>
         /* ESTILO NEÓN ALTA VISIBILIDAD */
         html, body {
@@ -36,7 +36,8 @@
         /* RESULTADOS */
         #display { display: none; margin-top: 20px; }
         
-        .btn-voz { background: #39FF14; color: #000; margin-bottom: 15px; }
+        .btn-voz { background: #39FF14; color: #000; margin-bottom: 10px; }
+        .btn-compartir { background: #25D366; color: white; margin-bottom: 15px; font-size: 16px; }
 
         .card-info {
             border-left: 5px solid #00FFFF; padding: 15px; margin-bottom: 15px;
@@ -48,7 +49,6 @@
 
         .res-img { width: 100%; border: 3px solid #FFFF00; border-radius: 15px; margin-bottom: 15px; }
 
-        /* VIDEOS */
         .video-container {
             width: 100%; border: 2px solid #FF00FF; border-radius: 15px;
             overflow: hidden; margin-top: 15px; box-shadow: 0 0 15px #FF00FF;
@@ -63,8 +63,8 @@
 
     <div class="container">
         <div id="setup" class="card-main">
-            <p style="color:#00FFFF; font-weight: bold;">Texto • Imágenes • Voz • Video</p>
-            <input type="text" id="query" placeholder="Ej: Gatos, Luna, Pizza...">
+            <p style="color:#00FFFF; font-weight: bold;">Investigación Multimedia Completa</p>
+            <input type="text" id="query" placeholder="¿Qué quieres investigar?">
             <button onclick="investigar()">BUSCAR TODO</button>
         </div>
 
@@ -73,7 +73,8 @@
             
             <img id="res-img" class="res-img" src="">
 
-            <button class="btn-voz" onclick="hablar()">🔊 ESCUCHAR EXPLICACIÓN</button>
+            <button class="btn-voz" onclick="hablar()">🔊 ESCUCHAR INFORMACIÓN</button>
+            <button class="btn-compartir" onclick="compartir()">📲 COMPARTIR EN WHATSAPP</button>
             
             <div id="texto-completo">
                 <div class="card-info">
@@ -93,7 +94,7 @@
             <h3 style="color:#39FF14; text-align:center;">📺 VIDEO RELACIONADO</h3>
             <div class="video-container" id="video-box"></div>
 
-            <button onclick="location.reload()" style="background:#444; margin-top: 20px;">NUEVA BÚSQUEDA</button>
+            <button onclick="location.reload()" style="background:#444; margin-top: 20px;">NUEVA INVESTIGACIÓN</button>
         </div>
     </div>
 
@@ -105,6 +106,13 @@
             window.speechSynthesis.speak(mensaje);
         }
 
+        function compartir() {
+            const tema = document.getElementById('res-title').innerText;
+            const link = window.location.href;
+            const textoWhas = `¡Mira lo que aprendí sobre ${tema} en Tu Mundo! Investigalo tú también aquí: ${link}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textoWhas)}`, '_blank');
+        }
+
         function investigar() {
             const t = document.getElementById('query').value.toLowerCase().trim();
             if(!t) return;
@@ -113,30 +121,31 @@
             document.getElementById('display').style.display = 'block';
             document.getElementById('res-title').innerText = t.toUpperCase();
             
-            // Imagen Dinámica
             document.getElementById('res-img').src = "https://loremflickr.com/600/400/" + t;
 
-            // Video Dinámico (YouTube Search)
             document.getElementById('video-box').innerHTML = `
                 <iframe width="100%" height="315" 
-                src="https://www.youtube.com/embed?listType=search&list=${t}+explicacion+educativa" 
+                src="https://www.youtube.com/embed?listType=search&list=${t}+educativo+explicacion" 
                 frameborder="0" allowfullscreen></iframe>`;
 
             let d = "", i = "", c = "";
 
-            // Lógica de aprendizaje
-            if(t.match(/gato|perro|animal|leon/)) {
-                d = "Es un ser vivo que forma parte del reino animal y el ecosistema.";
-                i = "Mantienen el equilibrio natural y son compañeros del ser humano.";
-                c = "Los animales tienen formas increíbles de comunicarse sin palabras.";
-            } else if(t.match(/luna|espacio|sol|planeta/)) {
-                d = "Es un objeto celeste que existe en el vasto universo.";
-                i = "Nos enseña sobre las leyes de la física y el origen del tiempo.";
-                c = "¡En el espacio el silencio es total porque no hay aire!";
+            if(t.match(/gato|perro|animal|leon|tigre|elefante/)) {
+                d = "Es un ser vivo mamífero que forma parte esencial de la biodiversidad.";
+                i = "Son clave para el equilibrio natural y la compañía humana.";
+                c = "Los animales tienen formas asombrosas de comunicarse que aún estamos descubriendo.";
+            } else if(t.match(/luna|marte|sol|espacio|planeta|estrella/)) {
+                d = "Es un cuerpo astronómico en el vasto sistema solar o el universo.";
+                i = "Nos ayuda a entender las leyes físicas y el futuro de nuestra especie.";
+                c = "¡En el espacio el silencio es absoluto porque no hay aire para el sonido!";
+            } else if(t.match(/manzana|fruta|comida|pizza|banana|vitamina/)) {
+                d = "Alimento que aporta energía y nutrientes vitales para la salud.";
+                i = "Fortalece el sistema inmune y ayuda al crecimiento del cuerpo.";
+                c = "¿Sabías que la miel es el único alimento que nunca caduca?";
             } else {
-                d = "Es un tema clave que expande nuestro conocimiento en Tu Mundo.";
-                i = "Aprender sobre esto nos ayuda a entender mejor la realidad.";
-                c = "Tu cerebro se vuelve más fuerte cada vez que investigas algo nuevo.";
+                d = "Es un tema fundamental que expande tu conocimiento en Tu Mundo.";
+                i = "Aprender sobre esto te permite entender mejor la realidad actual.";
+                c = "¡Tu cerebro crea nuevas conexiones cada vez que investigas algo aquí!";
             }
 
             document.getElementById('res-def').innerText = d;
