@@ -3,154 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Enciclopedia Total</title>
+    <title>Tu Mundo - Versión Final</title>
     <style>
-        /* ESTILO NEÓN ALTA VISIBILIDAD */
-        html, body {
-            background-color: #000000 !important;
-            margin: 0; padding: 0; color: #ffffff;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        header { border-bottom: 4px solid #FF00FF; padding: 20px; text-align: center; }
-        h1 { color: #FFFF00; text-shadow: 0 0 15px #FF00FF; font-size: 32px; margin: 0; }
-
-        .container { padding: 15px; max-width: 600px; margin: auto; }
-
-        .card-main {
-            border: 3px solid #39FF14; background-color: #050505;
-            padding: 25px; border-radius: 20px; text-align: center;
-            box-shadow: 0 0 15px #39FF14;
-        }
-
-        input {
-            width: 100%; padding: 15px; background: #000; border: 2px solid #00FFFF;
-            color: #FFFF00; border-radius: 10px; font-size: 18px; box-sizing: border-box; margin-bottom: 15px;
-        }
-
-        button {
-            width: 100%; padding: 15px; background: #FF00FF; color: white;
-            font-weight: bold; border: none; border-radius: 10px; font-size: 18px; cursor: pointer;
-        }
-
-        /* RESULTADOS */
-        #display { display: none; margin-top: 20px; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 15px; text-align: center; }
+        .neon-box { border: 3px solid #39FF14; padding: 20px; border-radius: 20px; background: #050505; box-shadow: 0 0 10px #39FF14; margin-bottom: 20px; }
+        h1 { color: #FFFF00; text-shadow: 0 0 10px #FF00FF; margin: 10px 0; }
+        input { width: 100%; padding: 15px; background: #000; border: 2px solid #00FFFF; color: #FFFF00; border-radius: 10px; font-size: 18px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
+        .btn-buscar { background: #FF00FF; color: white; }
+        .btn-voz { background: #39FF14; color: #000; }
+        .btn-share { background: #25D366; color: white; }
         
-        .btn-voz { background: #39FF14; color: #000; margin-bottom: 10px; }
-        .btn-compartir { background: #25D366; color: white; margin-bottom: 15px; font-size: 16px; }
-
-        .card-info {
-            border-left: 5px solid #00FFFF; padding: 15px; margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.07); border-radius: 0 10px 10px 0;
-        }
-
-        .card-info h3 { color: #39FF14; margin: 0 0 5px 0; font-size: 17px; text-transform: uppercase; }
-        .card-info p { color: #fff; line-height: 1.6; margin: 0; font-size: 16px; }
-
-        .res-img { width: 100%; border: 3px solid #FFFF00; border-radius: 15px; margin-bottom: 15px; }
-
-        .video-container {
-            width: 100%; border: 2px solid #FF00FF; border-radius: 15px;
-            overflow: hidden; margin-top: 15px; box-shadow: 0 0 15px #FF00FF;
-        }
+        #pantalla { display: none; }
+        .info-card { border-left: 4px solid #00FFFF; background: #111; padding: 15px; margin-top: 15px; text-align: left; }
+        .info-card h3 { color: #39FF14; margin: 0; font-size: 14px; text-transform: uppercase; }
+        .res-img { width: 100%; border-radius: 15px; border: 2px solid #FFFF00; margin-top: 15px; }
+        .vid-box { width: 100%; border-radius: 15px; border: 2px solid #FF00FF; margin-top: 15px; overflow: hidden; height: 250px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>TU MUNDO</h1>
-    </header>
+    <h1>TU MUNDO</h1>
 
-    <div class="container">
-        <div id="setup" class="card-main">
-            <p style="color:#00FFFF; font-weight: bold;">Investigación Multimedia Completa</p>
-            <input type="text" id="query" placeholder="¿Qué quieres investigar?">
-            <button onclick="investigar()">BUSCAR TODO</button>
+    <div id="inicio" class="neon-box">
+        <p style="color:#00FFFF">Investigación Multimedia</p>
+        <input type="text" id="busqueda" placeholder="Ej: Gatos, Luna, Pizza...">
+        <button class="btn-buscar" onclick="buscar()">INICIAR INVESTIGACIÓN</button>
+    </div>
+
+    <div id="pantalla" class="neon-box">
+        <h2 id="titulo" style="color:#FF00FF; margin: 0;"></h2>
+        <img id="foto" class="res-img" src="">
+        
+        <button class="btn-voz" onclick="hablar()">🔊 ESCUCHAR</button>
+        <button class="btn-share" onclick="compartir()">📲 COMPARTIR</button>
+
+        <div id="texto">
+            <div class="info-card"><h3>¿Qué es?</h3><p id="r1"></p></div>
+            <div class="info-card"><h3>Importancia</h3><p id="r2"></p></div>
+            <div class="info-card"><h3>Curiosidad</h3><p id="r3"></p></div>
         </div>
 
-        <div id="display">
-            <h2 id="res-title" style="color:#FF00FF; text-align:center; font-size: 30px;"></h2>
-            
-            <img id="res-img" class="res-img" src="">
+        <h3 style="color:#39FF14; margin-top:20px;">📺 VIDEO</h3>
+        <div id="video" class="vid-box"></div>
 
-            <button class="btn-voz" onclick="hablar()">🔊 ESCUCHAR INFORMACIÓN</button>
-            <button class="btn-compartir" onclick="compartir()">📲 COMPARTIR EN WHATSAPP</button>
-            
-            <div id="texto-completo">
-                <div class="card-info">
-                    <h3>¿Qué es?</h3>
-                    <p id="res-def"></p>
-                </div>
-                <div class="card-info">
-                    <h3>Importancia</h3>
-                    <p id="res-imp"></p>
-                </div>
-                <div class="card-info">
-                    <h3>Dato Curioso</h3>
-                    <p id="res-cur"></p>
-                </div>
-            </div>
-
-            <h3 style="color:#39FF14; text-align:center;">📺 VIDEO RELACIONADO</h3>
-            <div class="video-container" id="video-box"></div>
-
-            <button onclick="location.reload()" style="background:#444; margin-top: 20px;">NUEVA INVESTIGACIÓN</button>
-        </div>
+        <button onclick="location.reload()" style="background:#333; color:white;">NUEVA BÚSQUEDA</button>
     </div>
 
     <script>
+        function buscar() {
+            const t = document.getElementById('busqueda').value.trim();
+            if(!t) return;
+            document.getElementById('inicio').style.display = 'none';
+            document.getElementById('pantalla').style.display = 'block';
+            document.getElementById('titulo').innerText = t.toUpperCase();
+            document.getElementById('foto').src = "https://loremflickr.com/500/400/" + t;
+            document.getElementById('video').innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${t}+educativo" frameborder="0"></iframe>`;
+
+            let d = "Es un tema fascinante que estamos explorando hoy en Tu Mundo.";
+            let i = "Su estudio nos permite comprender mejor el entorno y la tecnología.";
+            let c = "¡Tu cerebro aprende algo nuevo cada vez que haces una búsqueda!";
+
+            if(t.toLowerCase().match(/gato|perro|animal/)) {
+                d = "Es un ser vivo que ayuda al equilibrio del planeta.";
+                i = "Son compañeros vitales para el ser humano.";
+                c = "Los animales se comunican de formas que aún no comprendemos del todo.";
+            }
+
+            document.getElementById('r1').innerText = d;
+            document.getElementById('r2').innerText = i;
+            document.getElementById('r3').innerText = c;
+        }
+
         function hablar() {
-            const texto = document.getElementById('texto-completo').innerText;
-            const mensaje = new SpeechSynthesisUtterance(texto);
-            mensaje.lang = 'es-ES';
-            window.speechSynthesis.speak(mensaje);
+            const texto = document.getElementById('texto').innerText;
+            const msj = new SpeechSynthesisUtterance(texto);
+            msj.lang = 'es-ES';
+            window.speechSynthesis.speak(msj);
         }
 
         function compartir() {
-            const tema = document.getElementById('res-title').innerText;
-            const link = window.location.href;
-            const textoWhas = `¡Mira lo que aprendí sobre ${tema} en Tu Mundo! Investigalo tú también aquí: ${link}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textoWhas)}`, '_blank');
-        }
-
-        function investigar() {
-            const t = document.getElementById('query').value.toLowerCase().trim();
-            if(!t) return;
-
-            document.getElementById('setup').style.display = 'none';
-            document.getElementById('display').style.display = 'block';
-            document.getElementById('res-title').innerText = t.toUpperCase();
-            
-            document.getElementById('res-img').src = "https://loremflickr.com/600/400/" + t;
-
-            document.getElementById('video-box').innerHTML = `
-                <iframe width="100%" height="315" 
-                src="https://www.youtube.com/embed?listType=search&list=${t}+educativo+explicacion" 
-                frameborder="0" allowfullscreen></iframe>`;
-
-            let d = "", i = "", c = "";
-
-            if(t.match(/gato|perro|animal|leon|tigre|elefante/)) {
-                d = "Es un ser vivo mamífero que forma parte esencial de la biodiversidad.";
-                i = "Son clave para el equilibrio natural y la compañía humana.";
-                c = "Los animales tienen formas asombrosas de comunicarse que aún estamos descubriendo.";
-            } else if(t.match(/luna|marte|sol|espacio|planeta|estrella/)) {
-                d = "Es un cuerpo astronómico en el vasto sistema solar o el universo.";
-                i = "Nos ayuda a entender las leyes físicas y el futuro de nuestra especie.";
-                c = "¡En el espacio el silencio es absoluto porque no hay aire para el sonido!";
-            } else if(t.match(/manzana|fruta|comida|pizza|banana|vitamina/)) {
-                d = "Alimento que aporta energía y nutrientes vitales para la salud.";
-                i = "Fortalece el sistema inmune y ayuda al crecimiento del cuerpo.";
-                c = "¿Sabías que la miel es el único alimento que nunca caduca?";
-            } else {
-                d = "Es un tema fundamental que expande tu conocimiento en Tu Mundo.";
-                i = "Aprender sobre esto te permite entender mejor la realidad actual.";
-                c = "¡Tu cerebro crea nuevas conexiones cada vez que investigas algo aquí!";
-            }
-
-            document.getElementById('res-def').innerText = d;
-            document.getElementById('res-imp').innerText = i;
-            document.getElementById('res-cur').innerText = c;
+            const t = document.getElementById('titulo').innerText;
+            const url = window.location.href;
+            window.open(`https://api.whatsapp.com/send?text=Mira lo que aprendí sobre ${t}: ${url}`);
         }
     </script>
 </body>
