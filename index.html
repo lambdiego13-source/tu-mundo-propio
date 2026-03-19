@@ -3,144 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Enciclopedia Neón</title>
+    <title>Tu Mundo - Buscador</title>
+    
+    <!-- Enlaces para el Icono y modo App -->
+    <link rel="icon" type="image/png" href="icono.png">
+    <link rel="apple-touch-icon" href="icono.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4285f4">
+    <meta name="mobile-web-app-capable" content="yes">
+
     <style>
-        /* ESTILO NEÓN PROFESIONAL */
-        body { 
-            background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; 
-            margin: 0; padding: 15px; text-align: center; 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
         }
-        .neon-container { 
-            border: 3px solid #39FF14; padding: 25px; border-radius: 25px; 
-            background: #050505; box-shadow: 0 0 20px #39FF14; margin-bottom: 20px;
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #4285f4;
         }
-        h1 { color: #FFFF00; text-shadow: 0 0 15px #FF00FF; font-size: 38px; margin: 10px 0; }
-        
-        /* ICONO DE FLOR NEÓN */
-        .flower-icon { font-size: 50px; text-shadow: 0 0 10px #FF00FF; margin-bottom: 10px; display: block; }
-
-        input { 
-            width: 100%; padding: 18px; background: #000; border: 2px solid #00FFFF; 
-            color: #FFFF00; border-radius: 12px; font-size: 20px; box-sizing: border-box; 
+        .search-container {
+            width: 90%;
+            max-width: 600px;
         }
-        
-        button { 
-            width: 100%; padding: 18px; margin-top: 15px; border-radius: 12px; 
-            font-weight: bold; border: none; font-size: 18px; cursor: pointer; 
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
         }
-        .btn-search { background: #FF00FF; color: white; box-shadow: 0 0 10px #FF00FF; }
-        .btn-voice { background: #39FF14; color: #000; }
-        .btn-share { background: #25D366; color: white; }
-
-        /* RESULTADOS */
-        #results { display: none; margin-top: 25px; }
-        .info-card { 
-            border-left: 5px solid #00FFFF; background: rgba(255,255,255,0.08); 
-            padding: 15px; margin-top: 15px; text-align: left; border-radius: 0 15px 15px 0;
+        input[type="text"]:focus {
+            box-shadow: 0 1px 8px rgba(32,33,36,0.4);
         }
-        .info-card h3 { color: #39FF14; margin: 0; font-size: 17px; text-transform: uppercase; }
-        .info-card p { color: #fff; font-size: 19px; line-height: 1.5; margin: 8px 0 0 0; }
-        
-        .main-img { 
-            width: 100%; border-radius: 20px; border: 3px solid #FFFF00; 
-            margin-top: 15px; box-shadow: 0 0 15px #FFFF00; 
+        .buttons {
+            margin-top: 20px;
         }
-        .video-box { 
-            width: 100%; border-radius: 20px; border: 3px solid #FF00FF; 
-            margin-top: 20px; overflow: hidden; height: 280px; 
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            background-color: #f8f9fa;
+            color: #3c4043;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid #f8f9fa;
+        }
+        button:hover {
+            border: 1px solid #dadce0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
-    <span class="flower-icon">🌸</span>
-    <h1>TU MUNDO</h1>
+    <div class="logo">Tu Mundo</div>
 
-    <div id="search-box" class="neon-container">
-        <p style="color:#00FFFF; font-size: 18px;">¿Qué quieres descubrir hoy?</p>
-        <input type="text" id="userInput" placeholder="Ej: Corazón, Avión, Marte, Gato...">
-        <button class="btn-search" onclick="startSearch()">INVESTIGAR AHORA</button>
+    <div class="search-container">
+        <form action="https://www.google.com/search" method="GET">
+            <input type="text" name="q" placeholder="Busca en Tu Mundo..." autocomplete="off">
+            <div class="buttons">
+                <button type="submit">Buscar con Google</button>
+            </div>
+        </form>
     </div>
 
-    <div id="results" class="neon-container">
-        <h2 id="res-title" style="color:#FF00FF; font-size: 32px; margin: 0;"></h2>
-        <img id="res-img" class="main-img" src="">
-        
-        <button class="btn-voice" onclick="speakText()">🔊 ESCUCHAR EXPLICACIÓN</button>
-        <button class="btn-share" onclick="shareApp()">📲 COMPARTIR CON AMIGOS</button>
-
-        <div id="full-text">
-            <div class="info-card"><h3>Concepto Educativo</h3><p id="desc"></p></div>
-            <div class="info-card"><h3>¿Por qué es importante?</h3><p id="imp"></p></div>
-            <div class="info-card"><h3>Dato Curioso</h3><p id="fact"></p></div>
-        </div>
-
-        <h3 style="color:#39FF14; margin-top:25px;">📺 VIDEO RELACIONADO</h3>
-        <div id="video-area" class="video-box"></div>
-
-        <button onclick="location.reload()" style="background:#444; color:white; margin-top: 20px;">NUEVA BÚSQUEDA</button>
-    </div>
-
-    <script>
-        function startSearch() {
-            const query = document.getElementById('userInput').value.trim();
-            if(!query) return;
-
-            document.getElementById('search-box').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('res-title').innerText = query.toUpperCase();
-            document.getElementById('res-img').src = "https://loremflickr.com/600/450/" + query;
-            
-            // Video educativo
-            document.getElementById('video-area').innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed?listType=search&list=${query}+explicacion" frameborder="0" allowfullscreen></iframe>`;
-
-            let d, i, f;
-            const q = query.toLowerCase();
-
-            // MOTOR DE INTELIGENCIA POR CATEGORÍA
-            if(q.match(/corazon|cerebro|ojo|cuerpo|organo|salud/)) {
-                d = "Es un órgano vital que forma parte de la increíble máquina que es el cuerpo humano.";
-                i = "Sin él, nuestro sistema no podría funcionar ni procesar la vida que llevamos.";
-                f = "¡Tu corazón late más de 100,000 veces al día sin que tengas que pedírselo!";
-            } else if(q.match(/avion|cine|luz|internet|telefono|robot/)) {
-                d = "Es un invento maravilloso creado por la mente humana para superar límites.";
-                i = "Cambió la historia permitiendo que nos conectemos y viajemos más rápido que nunca.";
-                f = "Antes de que existiera el cine, la gente solo podía imaginar las historias en libros.";
-            } else if(q.match(/mexico|españa|japon|francia|pais/)) {
-                d = "Es un territorio lleno de gente, cultura y tradiciones que lo hacen único.";
-                i = "Los países nos enseñan que el mundo es diverso y lleno de diferentes formas de vivir.";
-                f = "¡En algunos países el sol no se pone durante meses en el verano!";
-            } else if(q.match(/marte|luna|sol|planeta|espacio/)) {
-                d = "Es un cuerpo celeste que flota en el inmenso vacío del universo.";
-                i = "Estudiarlo nos ayuda a saber si estamos solos o si hay más vida allá afuera.";
-                f = "En el espacio, como no hay aire, tus gritos no se escucharían absolutamente nada.";
-            } else if(q.match(/perro|gato|leon|animal|oso/)) {
-                d = "Es un ser vivo que siente y comparte este planeta con nosotros.";
-                i = "Son fundamentales para que la naturaleza siga viva y en equilibrio.";
-                f = "¡Los gatos tienen un GPS interno que les ayuda a encontrar el camino a casa!";
-            } else {
-                d = "Es un tema muy interesante que hoy estamos aprendiendo en Tu Mundo.";
-                i = "Investigar cosas nuevas hace que tu cerebro se mantenga joven y fuerte.";
-                f = "Cada vez que buscas algo aquí, te vuelves un poco más sabio que ayer.";
-            }
-
-            document.getElementById('desc').innerText = d;
-            document.getElementById('imp').innerText = i;
-            document.getElementById('fact').innerText = f;
-        }
-
-        function speakText() {
-            const text = document.getElementById('full-text').innerText;
-            const speech = new SpeechSynthesisUtterance(text);
-            speech.lang = 'es-ES';
-            window.speechSynthesis.speak(speech);
-        }
-
-        function shareApp() {
-            const title = document.getElementById('res-title').innerText;
-            const text = `¡Mira lo que descubrí sobre ${title} en el buscador Tu Mundo! 🌸\nInvestiga tú también aquí: ${window.location.href}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`);
-        }
-    </script>
 </body>
 </html>
