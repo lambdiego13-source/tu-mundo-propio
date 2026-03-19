@@ -3,17 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Inventos y Ciencia</title>
+    <title>Tu Mundo - Inteligencia Real</title>
     <style>
         body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 15px; text-align: center; }
-        .neon-box { border: 3px solid #39FF14; padding: 25px; border-radius: 20px; background: #050505; box-shadow: 0 0 15px #39FF14; }
+        .neon-box { border: 3px solid #39FF14; padding: 20px; border-radius: 20px; background: #050505; box-shadow: 0 0 10px #39FF14; }
         h1 { color: #FFFF00; text-shadow: 0 0 10px #FF00FF; font-size: 35px; }
-        input { width: 100%; padding: 18px; background: #000; border: 2px solid #00FFFF; color: #FFFF00; border-radius: 12px; font-size: 22px; box-sizing: border-box; }
-        
-        button { width: 100%; padding: 18px; margin-top: 12px; border-radius: 12px; font-weight: bold; border: none; font-size: 20px; cursor: pointer; }
+        input { width: 100%; padding: 15px; background: #000; border: 2px solid #00FFFF; color: #FFFF00; border-radius: 10px; font-size: 20px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px; font-weight: bold; border: none; font-size: 18px; cursor: pointer; }
         .btn-buscar { background: #FF00FF; color: white; }
-        .btn-voz { background: #39FF14; color: #000; }
+        .btn-voz { background: #39FF14; color: #000; margin-top: 15px; }
         
         #pantalla { display: none; margin-top: 20px; }
-        .info-card { border-left: 5px solid #00FFFF; background: rgba(255,255,255,0.05); padding: 20px; margin-top: 15px; text-align: left; border-radius: 0 15px 15px 0; }
-        .
+        .info-card { border-left: 5px solid #00FFFF; background: #111; padding: 15px; margin-top: 10px; text-align: left; }
+        .info-card h3 { color: #39FF14; margin: 0; font-size: 16px; text-transform: uppercase; }
+        .info-card p { color: #fff; font-size: 18px; margin-top: 5px; }
+        .res-img { width: 100%; border-radius: 15px; border: 2px solid #FFFF00; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <h1>TU MUNDO</h1>
+
+    <div id="inicio" class="neon-box">
+        <input type="text" id="busqueda" placeholder="Ej: Japón, Pizza, Marte, Avión...">
+        <button class="btn-buscar" onclick="buscar()">INVESTIGAR TEMA</button>
+    </div>
+
+    <div id="pantalla" class="neon-box">
+        <h2 id="titulo" style="color:#FF00FF; margin: 0;"></h2>
+        <img id="foto" class="res-img" src="">
+        
+        <button class="btn-voz" onclick="hablar()">🔊 ESCUCHAR</button>
+
+        <div id="texto">
+            <div class="info-card"><h3>Concepto</h3><p id="r1"></p></div>
+            <div class="info-card"><h3>Importancia</h3><p id="r2"></p></div>
+            <div class="info-card"><h3>Curiosidad</h3><p id="r3"></p></div>
+        </div>
+
+        <button onclick="location.reload()" style="background:#444; color:white; margin-top: 20px;">NUEVA BÚSQUEDA</button>
+    </div>
+
+    <script>
+        function buscar() {
+            const t = document.getElementById('busqueda').value.toLowerCase().trim();
+            if(!t) return;
+            document.getElementById('inicio').style.display = 'none';
+            document.getElementById('pantalla').style.display = 'block';
+            document.getElementById('titulo').innerText = t.toUpperCase();
+            document.getElementById('foto').src = "https://loremflickr.com/500/400/" + t;
+
+            let d, i, c;
+
+            // --- MOTOR DE RESPUESTAS POR CATEGORÍA ---
+            if(t.match(/mexico|españa|japon|pais|china|francia/)) {
+                d = "Es una nación con cultura e historia única que define su identidad.";
+                i = "Cada país aporta tradiciones y conocimientos que enriquecen al mundo entero.";
+                c = "Hay países tan grandes que tienen 11 zonas horarias diferentes.";
+            } 
+            else if(t.match(/manzana|pizza|comida|fruta|hamburguesa/)) {
+                d = "Alimento que proporciona energía y nutrientes para el cuerpo.";
+                i = "Es vital para el crecimiento y fortalece nuestro sistema inmune.";
+                c = "La miel es el único alimento que nunca se echa a perder.";
+            }
+            else if(t.match(/avion|cine|bombilla|robot|telefono/)) {
+                d = "Es un invento tecnológico que cambió la forma en que vivimos.";
+                i = "Facilita las tareas diarias y nos permite conectar con el mundo.";
+                c = "La primera computadora ocupaba una habitación completa.";
+            }
+            else if(t.match(/luna|marte|sol|planeta|espacio/)) {
+                d = "Es un cuerpo celeste que forma parte del inmenso universo.";
+                i = "Estudiarlo nos ayuda a entender el origen de la vida.";
+                c = "En el espacio no hay sonido porque no hay aire.";
+            }
+            else {
+                d = "Es un tema clave que expande nuestro conocimiento en Tu Mundo.";
+                i = "Aprender sobre esto ayuda a que tu mente crezca cada día.";
+                c = "Cada vez que investigas algo nuevo, tu cerebro crea conexiones.";
+            }
+
+            document.getElementById('r1').innerText = d;
+            document.getElementById('r2').innerText = i;
+            document.getElementById('r3').innerText = c;
+        }
+
+        function hablar() {
+            const texto = document.getElementById('texto').innerText;
+            const msj = new SpeechSynthesisUtterance(texto);
+            msj.lang = 'es-ES';
+            window.speechSynthesis.speak(msj);
+        }
+    </script>
+</body>
+</html>
