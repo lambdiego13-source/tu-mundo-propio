@@ -3,123 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo Neon</title>
+    <title>Tu Mundo - Inteligencia Neón</title>
     <style>
-        /* FONDO NEGRO TOTAL GARANTIZADO */
-        body {
-            background-color: #000000;
-            color: #00FFFF;
-            font-family: Arial, sans-serif;
+        /* CONFIGURACIÓN DE VISIBILIDAD TOTAL */
+        html, body {
+            background-color: #000000 !important;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        header {
+            border-bottom: 4px solid #FF00FF;
+            padding: 25px;
             text-align: center;
+            box-shadow: 0 0 20px #FF00FF;
         }
 
-        /* TITULO BRILLANTE */
         h1 {
-            color: #FFFF00;
-            text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
-            font-size: 40px;
+            color: #FFFF00 !important;
+            font-size: 38px;
+            text-shadow: 2px 2px #00FFFF;
+            margin: 0;
         }
 
-        /* CAJA DE BUSQUEDA */
-        .caja {
-            border: 2px solid #39FF14;
+        .container {
             padding: 20px;
-            border-radius: 15px;
-            background: #050505;
-            box-shadow: 0 0 15px #39FF14;
-            max-width: 500px;
+            max-width: 600px;
             margin: auto;
         }
 
+        .search-box {
+            border: 3px solid #39FF14;
+            background-color: #050505;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px #39FF14;
+        }
+
         input {
-            width: 80%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #00FFFF;
-            background: #000;
-            color: #fff;
-            margin-bottom: 10px;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #000;
+            border: 2px solid #00FFFF;
+            color: #FFFF00;
+            border-radius: 10px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
         }
 
         button {
-            background: #FF00FF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* RESULTADOS */
-        #resultado {
-            display: none;
-            margin-top: 20px;
-            text-align: left;
-            border: 1px solid #FF00FF;
+            width: 100%;
             padding: 15px;
+            background-color: #FF00FF;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
             border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #FF00FF;
         }
 
-        h2 { color: #39FF14; border-bottom: 1px solid #333; }
-        p { color: #ffffff; line-height: 1.6; }
+        /* RESULTADOS DINÁMICOS */
+        #panel-resultados {
+            display: none;
+            margin-top: 25px;
+        }
 
-        .fotos { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 15px; }
-        .fotos img { width: 150px; border: 2px solid #FFFF00; border-radius: 10px; }
+        .card {
+            background: #0a0a0a;
+            border: 2px solid #00FFFF;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #39FF14 !important;
+            margin-top: 0;
+            font-size: 22px;
+            border-bottom: 1px solid #333;
+        }
+
+        .card p {
+            color: #ffffff !important;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .foto-neon {
+            width: 100%;
+            border: 3px solid #FFFF00;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <h1>TU MUNDO</h1>
-    
-    <div id="buscador" class="caja">
-        <p style="color: #39FF14;">Investigación Neón Independiente</p>
-        <input type="text" id="tema" placeholder="Escribe un tema aquí...">
-        <button onclick="buscar()">EXPLORAR</button>
-    </div>
+    <header>
+        <h1>TU MUNDO</h1>
+    </header>
 
-    <div id="resultado" class="caja">
-        <h2 id="titulo-res" style="text-align:center; color:#FF00FF;"></h2>
-        
-        <div class="fotos" id="galeria"></div>
+    <div class="container">
+        <div id="ui-busqueda" class="search-box">
+            <p style="color: #39FF14; font-weight: bold;">¿Qué quieres aprender hoy?</p>
+            <input type="text" id="inputTema" placeholder="Ej: Perro, Marte, Pizza...">
+            <button onclick="investigar()">INICIAR BÚSQUEDA</button>
+        </div>
 
-        <h2>Concepto</h2>
-        <p id="txt-concepto"></p>
+        <div id="panel-resultados">
+            <h1 id="titulo-tema" style="color: #FF00FF; text-align: center; margin-bottom: 20px;"></h1>
+            
+            <div id="contenedor-fotos"></div>
 
-        <h2>Importancia</h2>
-        <p id="txt-importancia"></p>
+            <div class="card">
+                <h2>Concepto</h2>
+                <p id="res-concepto"></p>
+            </div>
+            <div class="card">
+                <h2>Importancia</h2>
+                <p id="res-importancia"></p>
+            </div>
+            <div class="card">
+                <h2>Historia y Origen</h2>
+                <p id="res-historia"></p>
+            </div>
+            <div class="card">
+                <h2>¿Sabías que?</h2>
+                <p id="res-sabias"></p>
+            </div>
 
-        <h2>Historia</h2>
-        <p id="txt-historia"></p>
-
-        <h2>¿Sabías que?</h2>
-        <p id="txt-sabias"></p>
-
-        <button onclick="location.reload()" style="background:#333; width:100%;">VOLVER</button>
+            <button onclick="location.reload()" style="background-color: #333; border: 1px solid #777;">NUEVA INVESTIGACIÓN</button>
+        </div>
     </div>
 
     <script>
-        function buscar() {
-            const tema = document.getElementById('tema').value;
-            if(!tema) return alert("Escribe algo");
+        function investigar() {
+            const tema = document.getElementById('inputTema').value.toLowerCase().trim();
+            if(!tema) return alert("Escribe un tema");
 
-            document.getElementById('buscador').style.display = 'none';
-            document.getElementById('resultado').style.display = 'block';
-            document.getElementById('titulo-res').innerText = tema.toUpperCase();
+            document.getElementById('ui-busqueda').style.display = 'none';
+            document.getElementById('panel-resultados').style.display = 'block';
+            document.getElementById('titulo-tema').innerText = tema.toUpperCase();
 
-            // Fotos Reales
-            document.getElementById('galeria').innerHTML = `
-                <img src="https://loremflickr.com/300/200/${tema}?random=1">
-                <img src="https://loremflickr.com/300/200/${tema}?random=2">
-            `;
+            // Carga de Imagen
+            document.getElementById('contenedor-fotos').innerHTML = `<img src="https://loremflickr.com/600/400/${tema}" class="foto-neon">`;
 
-            // Contenido
-            document.getElementById('txt-concepto').innerText = tema + " es un tema esencial que destaca por su diseño y funcionalidad en el mundo moderno.";
-            document.getElementById('txt-importancia').innerText = "Su importancia radica en el impacto positivo que genera en la sociedad y la tecnología.";
-            document.getElementById('txt-historia').innerText = "A través de los años, " + tema + " ha evolucionado para adaptarse a las nuevas necesidades digitales.";
-            document.getElementById('txt-sabias').innerText = "¿Sabías que " + tema + " es uno de los términos más buscados en entornos de aprendizaje independiente?";
+            // Lógica de Respuesta Diferenciada
+            let concepto, importancia, historia, sabias;
+
+            if(tema.includes("perro") || tema.includes("gato") || tema.includes("caballo")) {
+                concepto = `El ${tema} es un ser vivo que pertenece al reino animal, conocido por su estrecha relación con los humanos.`;
+                importancia = `Son vitales para el ecosistema y ofrecen compañía, seguridad y apoyo emocional a las personas.`;
+                historia = `Fueron domesticados hace miles de años, evolucionando desde especies salvajes para adaptarse a la vida en sociedad.`;
+                sabias = `¿Sabías que los ${tema}s tienen sentidos mucho más desarrollados que los humanos, como el olfato y el oído?`;
+            } 
+            else if(tema.includes("casa") || tema.includes("edificio") || tema.includes("escuela")) {
+                concepto = `Una ${tema} es una estructura arquitectónica diseñada para brindar refugio y seguridad a quienes la habitan.`;
+                importancia = `Es la base de la estabilidad humana, proporcionando un espacio privado para el desarrollo de la familia.`;
+                historia = `Desde las cavernas hasta los rascacielos modernos, la forma de construir una ${tema} ha cambiado con los materiales disponibles.`;
+                sabias = `¿Sabías que existen ${tema}s construidas totalmente con materiales reciclados para proteger el medio ambiente?`;
+            }
+            else {
+                // Respuesta General para otros temas
+                concepto = `${tema} se define como un elemento fundamental en su categoría, influyendo en cómo entendemos nuestro entorno.`;
+                importancia = `Su valor reside en su utilidad práctica y en la forma en que facilita procesos complejos de la vida diaria.`;
+                historia = `El origen de ${tema} se remonta a la necesidad humana de innovar y resolver problemas específicos.`;
+                sabias = `¿Sabías que ${tema} es uno de los términos que más está evolucionando gracias a la tecnología actual?`;
+            }
+
+            document.getElementById('res-concepto').innerText = concepto;
+            document.getElementById('res-importancia').innerText = importancia;
+            document.getElementById('res-historia').innerText = historia;
+            document.getElementById('res-sabias').innerText = sabias;
         }
     </script>
 </body>
