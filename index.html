@@ -3,171 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Explorador Natural</title>
-    
+    <title>Tu Mundo Propio - Enciclopedia</title>
+
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icono.png" type="image/png">
 
+    <meta name="theme-color" content="#00ff00"> <link rel="apple-touch-icon" href="icono.png"> <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        :root {
-            --bosque-oscuro: #1b2e1b; 
-            --verde-lima: #a4f235;     
-            --azul-glaciar: #87ceeb;   
-            --rosa-petalo: #ff69b4;   
-            --texto-suave: #e0f2f1;    
-        }
-
+        /* Estética Neon y Naturaleza */
         body {
-            background-color: var(--bosque-oscuro);
-            color: var(--texto-suave);
-            font-family: 'Segoe UI', sans-serif;
+            background-color: #000; /* Cero blanco */
+            color: #00ff00; /* Verde Lima Neon */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            border: 5px solid #ff00ff; /* Borde Fucsia Neon */
             min-height: 100vh;
-        }
-
-        .header {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        /* Estilo para que tu imagen se vea bien en el título */
-        .mi-logo {
-            height: 50px;
-            width: auto;
-            vertical-align: middle;
-            margin: 0 10px;
-        }
-
-        .header h1 {
-            color: var(--verde-lima);
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px rgba(164, 242, 53, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .search-container {
-            width: 90%;
-            max-width: 600px;
-            margin-bottom: 30px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 15px 25px;
-            border-radius: 30px;
-            border: 2px solid var(--azul-glaciar);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1.1rem;
-            outline: none;
-            transition: 0.3s;
             box-sizing: border-box;
         }
 
-        input[type="text"]:focus {
-            border-color: var(--rosa-petalo);
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+        h1 {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            text-align: center;
         }
 
-        .results {
+        #buscador-container {
+            margin-bottom: 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        input {
+            background: #111;
+            border: 2px solid #00ffff; /* Azul Claro Neon */
+            color: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            outline: none;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+
+        button {
+            background: #ff00ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 10px #ff00ff;
+            transition: transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Ambientación de Flores */
+        .flor {
+            position: fixed;
+            font-size: 24px;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        #resultado {
             width: 90%;
             max-width: 800px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 5px solid var(--verde-lima);
+            border: 2px solid #00ff00;
             padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.05);
+            backdrop-filter: blur(2px);
             margin-bottom: 20px;
-            border-radius: 12px;
-            animation: fadeIn 0.6s ease;
         }
 
-        .card h2 { color: var(--azul-glaciar); margin-top: 0; }
-        
-        .card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            margin-top: 15px;
-            border: 1px solid rgba(255, 105, 180, 0.3);
+        #titulo-res {
+            color: #00ffff;
+            margin-top: 0;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        #contenido-res {
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>
-            <img src="icono.png" alt="Logo Izquierda" class="mi-logo">
-            Tu Mundo
-            <img src="icono.png" alt="Logo Derecha" class="mi-logo">
-        </h1>
-        <p>Buscador Independiente de Naturaleza y Lógica</p>
+    <h1>Tu Mundo Propio: Enciclopedia Universal</h1>
+
+    <div id="buscador-container">
+        <input type="text" id="busqueda" placeholder="Escribe cualquier tema...">
+        <button onclick="buscar()">Explorar</button>
+        <button onclick="hablar()">Escuchar 🔊</button>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Escribe aquí (ej. fotosintesis, arboles)..." onkeyup="buscar()">
+    <div id="resultado">
+        <h2 id="titulo-res">Bienvenido</h2>
+        <p id="contenido-res">Busca cualquier concepto, historia u origen. La interfaz es natural, pero el conocimiento es infinito.</p>
     </div>
-
-    <div id="resultsArea" class="results"></div>
 
     <script>
-        // BASE DE DATOS LOCAL (Aquí puedes seguir agregando información)
-        const baseDeDatos = {
-            "fotosintesis": {
-                titulo: "La Fotosíntesis",
-                info: "Es el proceso lógico-natural donde las plantas convierten luz solar en energía química. Es la base de la vida independiente en la Tierra.",
-                imagen: "https://images.unsplash.com/photo-1501004318641-739e828a1751?auto=format&fit=crop&w=600&q=80"
-            },
-            "arboles": {
-                titulo: "Estructuras Leñosas",
-                info: "Los árboles actúan como servidores naturales de almacenamiento de carbono y purificación de aire.",
-                imagen: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=600&q=80"
-            },
-            "agua": {
-                titulo: "Ciclo del Agua",
-                info: "Información lógica sobre el movimiento continuo del agua en la atmósfera, superficie y suelo.",
-                imagen: "https://images.unsplash.com/photo-1438401171849-2d827b0eb9e2?auto=format&fit=crop&w=600&q=80"
-            }
-        };
+        // === REGISTRO DEL SERVICE WORKER (PWA) ===
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registrado', reg))
+                    .catch(err => console.warn('Error al registrar Service Worker', err));
+            });
+        }
 
-        function buscar() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const area = document.getElementById('resultsArea');
-            area.innerHTML = ""; 
-
-            if (query.length < 2) return;
-
-            let hayResultados = false;
-
-            for (let clave in baseDeDatos) {
-                if (clave.includes(query)) {
-                    const item = baseDeDatos[clave];
-                    hayResultados = true;
-                    area.innerHTML += `
-                        <div class="card">
-                            <h2>${item.titulo}</h2>
-                            <p>${item.info}</p>
-                            <img src="${item.imagen}" alt="${item.titulo}">
-                        </div>
-                    `;
-                }
-            }
-
-            if (!hayResultados) {
-                area.innerHTML = `<p style="text-align:center; color: var(--rosa-petalo);">No se encontró información lógica para esa semilla de búsqueda.</p>`;
+        // Generador de flores aleatorias para el fondo
+        function crearFlores() {
+            const flores = ['🌸', '🌼', '🌺', '🌻', '🌹', '🌿', '🍃'];
+            for (let i = 0; i < 15; i++) {
+                let f = document.createElement('div');
+                f.className = 'flor';
+                f.innerText = flores[Math.floor(Math.random() * flores.length)];
+                f.style.left = Math.random() * 100 + 'vw';
+                f.style.top = Math.random() * 100 + 'vh';
+                f.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                document.body.appendChild(f);
             }
         }
+        crearFlores();
+
+        // Función de búsqueda UNIVERSAL (Usa Wikipedia)
+        async function buscar() {
+            const query = document.getElementById('busqueda').value.trim();
+            const titulo = document.getElementById('titulo-res');
+            const contenido = document.getElementById('contenido-res');
+
+            if (!query) {
+                titulo.innerText = "Por favor, escribe algo.";
+                contenido.innerText = "";
+                return;
+            }
+
+            titulo.innerText = `Buscando "${query}"...`;
+            contenido.innerText = "Cargando conocimiento de la naturaleza neon...";
+            
+            try {
+                // API de Wikipedia para obtener información de CUALQUIER tema
+                const url = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) throw new Error('No encontrado');
+                
+                const data = await response.json();
+
+                if (data.title && data.extract) {
+                    titulo.innerText = data.title;
+                    contenido.innerText = data.extract;
+                } else {
+                    mostrarNoEncontrado();
+                }
+            } catch (error) {
+                mostrarNoEncontrado();
+            }
+        }
+
+        function mostrarNoEncontrado() {
+            document.getElementById('titulo-res').innerText = "Concepto no encontrado";
+            document.getElementById('contenido-res').innerText = "La enciclopedia no ha podido hallar ese término específico. Prueba con palabras más generales o revisa la ortografía.";
+        }
+
+        // Función de voz (Sintetizador)
+        function hablar() {
+            const texto = document.getElementById('contenido-res').innerText;
+            if (!texto) return;
+            
+            // Cancelar cualquier lectura previa
+            window.speechSynthesis.cancel();
+            
+            const lectura = new SpeechSynthesisUtterance(texto);
+            lectura.lang = 'es-ES'; // Configurar idioma español
+            lectura.pitch = 1;      // Tono
+            lectura.rate = 1;       // Velocidad
+            window.speechSynthesis.speak(lectura);
+        }
+
+        // Permitir buscar al presionar "Enter"
+        document.getElementById('busqueda').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                buscar();
+            }
+        });
     </script>
 </body>
 </html>
