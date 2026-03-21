@@ -3,144 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Enciclopedia Neón</title>
+    <title>Tu Mundo - Explorador Natural</title>
     <style>
-        /* --- ESTILOS NEÓN Y AMBIENTACIÓN --- */
         :root {
-            --fucsia-neon: #ff00ff;
-            --lima-neon: #39ff14;
-            --cian-neon: #00ffff;
-            --fondo-oscuro: #050505; /* Casi negro para máximo contraste */
+            --bosque-oscuro: #1b2e1b;
+            --verde-lima: #a4f235;
+            --azul-glaciar: #87ceeb;
+            --rosa-petalo: #ff69b4;
+            --texto-suave: #e0f2f1;
         }
 
         body {
-            background-color: var(--fondo-oscuro);
-            color: #fff; /* Texto base blanco para legibilidad */
-            font-family: 'Montserrat', 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bosque-oscuro);
+            color: var(--texto-suave);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            position: relative;
         }
 
-        h1 {
-            color: var(--fucsia-neon);
-            font-size: 3.5rem;
-            text-shadow: 0 0 10px var(--fucsia-neon), 0 0 20px var(--fucsia-neon);
-            margin-top: 50px;
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            color: var(--verde-lima);
+            font-size: 3rem;
+            text-shadow: 0 0 15px var(--verde-lima);
             margin-bottom: 10px;
         }
 
-        p.subtitle {
-            color: var(--cian-neon);
-            text-shadow: 0 0 5px var(--cian-neon);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-
-        /* --- BUSCADOR --- */
-        .search-box {
+        .search-container {
             width: 90%;
             max-width: 600px;
-            display: flex;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            border-radius: 50px;
-            border: 2px solid var(--lima-neon);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+            position: relative;
         }
 
-        input {
-            flex-grow: 1;
-            padding: 15px;
-            border: none;
-            background: transparent;
-            color: #fff;
-            font-size: 1.2rem;
-            outline: none;
-        }
-
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* --- BOTONES ACUÑADOS --- */
-        .button-group {
-            margin-top: 30px;
-            display: flex;
-            gap: 20px;
-        }
-
-        button {
-            padding: 15px 30px;
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: 2px solid var(--azul-glaciar);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
             font-size: 1.1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            outline: none;
+            transition: 0.3s;
         }
 
-        .btn-explorar {
-            background-color: var(--fucsia-neon);
-            color: #000;
-            box-shadow: 0 0 10px var(--fucsia-neon);
+        input[type="text"]:focus {
+            border-color: var(--rosa-petalo);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
         }
 
-        .btn-explorar:hover {
-            box-shadow: 0 0 25px var(--fucsia-neon);
-            transform: translateY(-3px);
-        }
-
-        .btn-voz {
-            background-color: #333; /* Oscuro por defecto */
-            color: var(--lima-neon);
-            border: 2px solid var(--lima-neon);
-        }
-
-        .btn-voz:hover {
-            background-color: var(--lima-neon);
-            color: #000;
-            box-shadow: 0 0 20px var(--lima-neon);
-        }
-
-        /* --- ÁREA DE RESULTADOS --- */
-        #results-container {
-            margin-top: 40px;
+        .results {
             width: 90%;
             max-width: 800px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--cian-neon);
-            border-radius: 15px;
-            padding: 30px;
-            display: none; /* Oculto hasta buscar */
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+            margin-top: 30px;
         }
 
-        #res-title {
-            color: var(--fucsia-neon);
-            border-bottom: 2px solid var(--lima-neon);
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-
-        #res-meta {
-            color: var(--cian-neon);
-            font-style: italic;
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 5px solid var(--verde-lima);
+            padding: 20px;
             margin-bottom: 20px;
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease;
         }
 
-        #res-content {
-            line-height: 1.8;
-            font-size: 1.1rem;
+        .card h2 { color: var(--azul-glaciar); margin-top: 0; }
+        
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid var(--rosa-petalo);
         }
 
-        #res-
+        .flower-icon {
+            font-size: 2rem;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1><span class="flower-icon">🌸</span>Tu Mundo<span class="flower-icon">🌿</span></h1>
+        <p>Enciclopedia Autónoma de Conocimiento</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Busca un concepto (ej. Fotosíntesis, Árboles)..." onkeyup="buscar()">
+    </div>
+
+    <div id="resultsArea" class="results"></div>
+
+    <script>
+        // Base de Datos Independiente (Información Lógica)
+        
