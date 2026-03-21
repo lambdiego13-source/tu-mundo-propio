@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu Mundo - Explorador Natural</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icono.png" type="image/png">
+
     <style>
         :root {
-            --bosque-oscuro: #1b2e1b;
-            --verde-lima: #a4f235;
-            --azul-glaciar: #87ceeb;
-            --rosa-petalo: #ff69b4;
-            --texto-suave: #e0f2f1;
+            --bosque-oscuro: #1b2e1b; 
+            --verde-lima: #a4f235;     
+            --azul-glaciar: #87ceeb;   
+            --rosa-petalo: #ff69b4;   
+            --texto-suave: #e0f2f1;    
         }
 
         body {
             background-color: var(--bosque-oscuro);
             color: var(--texto-suave);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -29,17 +33,27 @@
             padding: 40px 20px;
         }
 
+        /* Estilo para que tu imagen se vea bien en el título */
+        .mi-logo {
+            height: 50px;
+            width: auto;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+
         .header h1 {
             color: var(--verde-lima);
-            font-size: 3rem;
-            text-shadow: 0 0 15px var(--verde-lima);
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(164, 242, 53, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .search-container {
             width: 90%;
             max-width: 600px;
-            position: relative;
+            margin-bottom: 30px;
         }
 
         input[type="text"] {
@@ -52,17 +66,17 @@
             font-size: 1.1rem;
             outline: none;
             transition: 0.3s;
+            box-sizing: border-box;
         }
 
         input[type="text"]:focus {
             border-color: var(--rosa-petalo);
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
         }
 
         .results {
             width: 90%;
             max-width: 800px;
-            margin-top: 30px;
         }
 
         .card {
@@ -70,8 +84,8 @@
             border-left: 5px solid var(--verde-lima);
             padding: 20px;
             margin-bottom: 20px;
-            border-radius: 8px;
-            animation: fadeIn 0.5s ease;
+            border-radius: 12px;
+            animation: fadeIn 0.6s ease;
         }
 
         .card h2 { color: var(--azul-glaciar); margin-top: 0; }
@@ -79,15 +93,9 @@
         .card img {
             max-width: 100%;
             height: auto;
-            border-radius: 10px;
-            margin: 15px 0;
-            border: 1px solid var(--rosa-petalo);
-        }
-
-        .flower-icon {
-            font-size: 2rem;
-            display: inline-block;
-            margin: 0 10px;
+            border-radius: 15px;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 105, 180, 0.3);
         }
 
         @keyframes fadeIn {
@@ -99,16 +107,67 @@
 <body>
 
     <div class="header">
-        <h1><span class="flower-icon">🌸</span>Tu Mundo<span class="flower-icon">🌿</span></h1>
-        <p>Enciclopedia Autónoma de Conocimiento</p>
+        <h1>
+            <img src="icono.png" alt="Logo Izquierda" class="mi-logo">
+            Tu Mundo
+            <img src="icono.png" alt="Logo Derecha" class="mi-logo">
+        </h1>
+        <p>Buscador Independiente de Naturaleza y Lógica</p>
     </div>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Busca un concepto (ej. Fotosíntesis, Árboles)..." onkeyup="buscar()">
+        <input type="text" id="searchInput" placeholder="Escribe aquí (ej. fotosintesis, arboles)..." onkeyup="buscar()">
     </div>
 
     <div id="resultsArea" class="results"></div>
 
     <script>
-        // Base de Datos Independiente (Información Lógica)
-        
+        // BASE DE DATOS LOCAL (Aquí puedes seguir agregando información)
+        const baseDeDatos = {
+            "fotosintesis": {
+                titulo: "La Fotosíntesis",
+                info: "Es el proceso lógico-natural donde las plantas convierten luz solar en energía química. Es la base de la vida independiente en la Tierra.",
+                imagen: "https://images.unsplash.com/photo-1501004318641-739e828a1751?auto=format&fit=crop&w=600&q=80"
+            },
+            "arboles": {
+                titulo: "Estructuras Leñosas",
+                info: "Los árboles actúan como servidores naturales de almacenamiento de carbono y purificación de aire.",
+                imagen: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=600&q=80"
+            },
+            "agua": {
+                titulo: "Ciclo del Agua",
+                info: "Información lógica sobre el movimiento continuo del agua en la atmósfera, superficie y suelo.",
+                imagen: "https://images.unsplash.com/photo-1438401171849-2d827b0eb9e2?auto=format&fit=crop&w=600&q=80"
+            }
+        };
+
+        function buscar() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const area = document.getElementById('resultsArea');
+            area.innerHTML = ""; 
+
+            if (query.length < 2) return;
+
+            let hayResultados = false;
+
+            for (let clave in baseDeDatos) {
+                if (clave.includes(query)) {
+                    const item = baseDeDatos[clave];
+                    hayResultados = true;
+                    area.innerHTML += `
+                        <div class="card">
+                            <h2>${item.titulo}</h2>
+                            <p>${item.info}</p>
+                            <img src="${item.imagen}" alt="${item.titulo}">
+                        </div>
+                    `;
+                }
+            }
+
+            if (!hayResultados) {
+                area.innerHTML = `<p style="text-align:center; color: var(--rosa-petalo);">No se encontró información lógica para esa semilla de búsqueda.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
