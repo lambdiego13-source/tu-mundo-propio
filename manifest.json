@@ -1,23 +1,20 @@
 {
-  "name": "Tu Mundo Propio - Enciclopedia",
-  "short_name": "MundoPropio",
-  "start_url": "/tu-mundo-propio/index.html",
-  "scope": "/tu-mundo-propio/",
+  "name": "Tu Mundo Buscador",
+  "short_name": "TuMundo",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#00ff00",
+  "background_color": "#0b0f19",
+  "theme_color": "#ff00ff",
   "icons": [
     {
-      "src": "icono.png", 
+      "src": "icono.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "icono.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
