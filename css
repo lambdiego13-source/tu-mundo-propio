@@ -1,0 +1,22 @@
+/* Estilo para el contenedor de las fotos */
+#contenedor-fotos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    justify-items: center;
+}
+
+/* Estilo para cada imagen con efecto neón */
+#contenedor-fotos img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 15px;
+    border: 3px solid #39FF14; /* Verde neón */
+    box-shadow: 0 0 10px #39FF14, 0 0 20px #ff00ff; /* Doble brillo verde y fucsia */
+    transition: transform 0.3s ease;
+}
+
+#contenedor-fotos img:active {
+    transform: scale(1.1); /* Efecto al tocar la foto en el celular */
+}
