@@ -1,22 +1,87 @@
-/* Estilo para el contenedor de las fotos */
-#contenedor-fotos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0b0f19; /* Fondo muy oscuro */
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.contenedor-principal {
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.titulo-neon {
+    color: #ff00ff; /* Fucsia */
+    font-size: 3rem;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ff00; /* Brillo verde */
+    margin-bottom: 5px;
+}
+
+.subtitulo {
+    color: #00f2ff; /* Azul claro */
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.busqueda-box {
+    background: rgba(255, 255, 255, 0.05);
     padding: 20px;
-    justify-items: center;
+    border-radius: 20px;
+    border: 2px solid #00ff00; /* Borde verde lima */
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
 }
 
-/* Estilo para cada imagen con efecto neón */
-#contenedor-fotos img {
+input[type="text"] {
     width: 100%;
-    max-width: 200px;
-    border-radius: 15px;
-    border: 3px solid #39FF14; /* Verde neón */
-    box-shadow: 0 0 10px #39FF14, 0 0 20px #ff00ff; /* Doble brillo verde y fucsia */
-    transition: transform 0.3s ease;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #1a1a2e;
+    color: #00ff00;
+    font-size: 1.1rem;
+    outline: none;
+    box-sizing: border-box;
 }
 
-#contenedor-fotos img:active {
-    transform: scale(1.1); /* Efecto al tocar la foto en el celular */
+.botones-accion {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#btnBuscar {
+    background-color: #ff00ff;
+    color: white;
+}
+
+#btnVoz {
+    background-color: #00f2ff;
+    color: #000;
+    max-width: 60px;
+}
+
+.seccion-resultados {
+    margin-top: 30px;
+    padding: 15px;
+    border-top: 1px solid #333;
+}
+
+.mensaje-espera {
+    color: #555;
 }
