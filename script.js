@@ -6,54 +6,43 @@ async function realizarBusqueda() {
         return;
     }
 
-    // Mensaje de carga con estilo neón
-    resultados.innerHTML = `<p style="color: #00f2ff; font-weight: bold; animation: pulse 1s infinite;">🔍 Buscando en Tu Mundo...</p>`;
+    resultados.innerHTML = `<p style="color: #00f2ff; font-weight: bold;">🔍 Buscando "${termino}" en Tu Mundo...</p>`;
 
-    try {
-        // Usamos la API de Wikipedia con formato JSON y origen permitido
-        const url = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(termino)}`;
-        
-        const respuesta = await fetch(url, {
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json'
-            }
-        });
+    // Usamos el formato "propuesto" por Wikipedia para evitar bloqueos en móviles
+    const url = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(termino)}`;
 
-        if (!respuesta.ok) {
-            throw new Error("No se encontró información.");
-        }
-
-        const datos = await respuesta.json();
-
-        // Limpiamos y mostramos los datos
-        resultados.innerHTML = `
-            <div style="border: 2px solid #00f2ff; padding: 15px; border-radius: 15px; background: #1a1a2e; box-shadow: 0 0 15px #00f2ff;">
-                <h2 style="color: #00ff00; margin-bottom: 10px;">${datos.title}</h2>
-                
-                ${datos.thumbnail ? 
-                    `<img src="${datos.thumbnail.source}" style="width: 100%; border-radius: 10px; border: 2px solid #ff00ff; margin-bottom: 15px;">` 
-                    : '<p style="color: #555;">(Sin imagen disponible)</p>'}
-                
-                <p id="textoParaLeer" style="color: #fff; line-height: 1.6; font-size: 1.1rem;">
-                    ${datos.extract}
-                </p>
-                
-                <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 10px;">
-                    <a href="${datos.content_urls.desktop.page}" target="_blank" style="color: #ff00ff; text-decoration: none; font-weight: bold;">
-                        🌐 Ver artículo completo
+    fetch(url)
+        .then(response => {
+            if (!response.ok) throw new Error("No encontrado");
+            return response.json();
+        })
+        .then(datos => {
+            // Si llegamos aquí, Wikipedia respondió bien
+            resultados.innerHTML = `
+                <div style="border: 2px solid #00f2ff; padding: 15px; border-radius: 15px; background: #1a1a2e; box-shadow: 0 0 15px #00f2ff; text-align: left;">
+                    <h2 style="color: #00ff00; margin-top: 0;">${datos.title}</h2>
+                    
+                    ${datos.thumbnail ? 
+                        `<img src="${datos.thumbnail.source}" style="width: 100%; border-radius: 10px; border: 2px solid #ff00ff; margin-bottom: 10px;">` 
+                        : ''}
+                    
+                    <p id="textoParaLeer" style="color: #fff; line-height: 1.5; font-size: 1rem;">
+                        ${datos.extract}
+                    </p>
+                    
+                    <a href="${datos.content_urls.desktop.page}" target="_blank" style="color: #ff00ff; text-decoration: none; font-weight: bold; display: block; margin-top: 10px;">
+                        Ver en Wikipedia →
                     </a>
                 </div>
-            </div>
-        `;
-
-    } catch (error) {
-        console.error("Error detallado:", error);
-        resultados.innerHTML = `
-            <div style="border: 2px solid #ff0000; padding: 10px; border-radius: 10px;">
-                <p style="color: #ff0000;">⚠️ No pudimos encontrar "${termino}".</p>
-                <p style="font-size: 0.8rem; color: #888;">Intenta con una palabra más sencilla (ej. Sol, Luna, Perro).</p>
-            </div>
-        `;
-    }
+            `;
+        })
+        .catch(error => {
+            // Si hay error, mostramos este mensaje neón
+            resultados.innerHTML = `
+                <div style="border: 2px solid #ff00ff; padding: 15px; border-radius: 15px; background: #1a1a2e;">
+                    <p style="color: #ff00ff;">❌ No encontré info sobre "${termino}".</p>
+                    <p style="color: #fff; font-size: 0.8rem;">Prueba con: Luna, Sol, o Plantas.</p>
+                </div>
+            `;
+        });
 }
