@@ -3,203 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo Propio - Enciclopedia</title>
-
-    <link rel="manifest" href="manifest.json">
-
-    <meta name="theme-color" content="#00ff00"> <link rel="apple-touch-icon" href="icono.png"> <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Tu Mundo - Buscador Inteligente</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
     <style>
-        /* Estética Neon y Naturaleza */
         body {
-            background-color: #000; /* Cero blanco */
-            color: #00ff00; /* Verde Lima Neon */
+            background-color: #121212; /* Fondo oscuro */
+            color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 5px solid #ff00ff; /* Borde Fucsia Neon */
             min-height: 100vh;
-            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
         }
 
         h1 {
-            color: #ff00ff;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
-            text-align: center;
+            color: #ff00ff; /* Fucsia Neón */
+            text-shadow: 0 0 10px #ff00ff;
+            margin-bottom: 30px;
         }
 
-        #buscador-container {
-            margin-bottom: 30px;
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
+        .buscador-container {
             display: flex;
             gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
         }
 
-        input {
-            background: #111;
-            border: 2px solid #00ffff; /* Azul Claro Neon */
-            color: #fff;
-            padding: 10px;
-            border-radius: 15px;
-            outline: none;
+        input[type="text"] {
             flex-grow: 1;
-            min-width: 200px;
+            padding: 12px;
+            border-radius: 25px;
+            border: 2px solid #39FF14; /* Verde Neón */
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            outline: none;
         }
 
         button {
-            background: #ff00ff;
-            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
             border: none;
-            padding: 10px 20px;
-            border-radius: 15px;
-            cursor: pointer;
+            background-color: #ff00ff; /* Fucsia Neón */
+            color: white;
             font-weight: bold;
-            box-shadow: 0 0 10px #ff00ff;
-            transition: transform 0.1s;
+            cursor: pointer;
+            transition: transform 0.2s;
         }
 
         button:active {
             transform: scale(0.95);
         }
-
-        /* Ambientación de Flores */
-        .flor {
-            position: fixed;
-            font-size: 24px;
-            z-index: -1;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        #resultado {
-            width: 90%;
-            max-width: 800px;
-            border: 2px solid #00ff00;
-            padding: 20px;
-            border-radius: 10px;
-            background: rgba(0, 255, 0, 0.05);
-            backdrop-filter: blur(2px);
-            margin-bottom: 20px;
-        }
-
-        #titulo-res {
-            color: #00ffff;
-            margin-top: 0;
-        }
-
-        #contenido-res {
-            line-height: 1.6;
-        }
     </style>
 </head>
 <body>
 
-    <h1>Tu Mundo Propio: Enciclopedia Universal</h1>
+    <h1>Tu Mundo</h1>
 
-    <div id="buscador-container">
-        <input type="text" id="busqueda" placeholder="Escribe cualquier tema...">
-        <button onclick="buscar()">Explorar</button>
-        <button onclick="hablar()">Escuchar 🔊</button>
+    <div class="buscador-container">
+        <input type="text" id="inputBusqueda" placeholder="¿Qué quieres investigar hoy?">
+        
+        <button onclick="realizarBusqueda()">Investigar</button>
     </div>
 
-    <div id="resultado">
-        <h2 id="titulo-res">Bienvenido</h2>
-        <p id="contenido-res">Busca cualquier concepto, historia u origen. La interfaz es natural, pero el conocimiento es infinito.</p>
-    </div>
+    <div id="contenedor-fotos">
+        </div>
 
-    <script>
-        // === REGISTRO DEL SERVICE WORKER (PWA) ===
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker registrado', reg))
-                    .catch(err => console.warn('Error al registrar Service Worker', err));
-            });
-        }
+    <script src="script.js"></script>
 
-        // Generador de flores aleatorias para el fondo
-        function crearFlores() {
-            const flores = ['🌸', '🌼', '🌺', '🌻', '🌹', '🌿', '🍃'];
-            for (let i = 0; i < 15; i++) {
-                let f = document.createElement('div');
-                f.className = 'flor';
-                f.innerText = flores[Math.floor(Math.random() * flores.length)];
-                f.style.left = Math.random() * 100 + 'vw';
-                f.style.top = Math.random() * 100 + 'vh';
-                f.style.animationDuration = (Math.random() * 5 + 3) + 's';
-                document.body.appendChild(f);
-            }
-        }
-        crearFlores();
-
-        // Función de búsqueda UNIVERSAL (Usa Wikipedia)
-        async function buscar() {
-            const query = document.getElementById('busqueda').value.trim();
-            const titulo = document.getElementById('titulo-res');
-            const contenido = document.getElementById('contenido-res');
-
-            if (!query) {
-                titulo.innerText = "Por favor, escribe algo.";
-                contenido.innerText = "";
-                return;
-            }
-
-            titulo.innerText = `Buscando "${query}"...`;
-            contenido.innerText = "Cargando conocimiento de la naturaleza neon...";
-            
-            try {
-                // API de Wikipedia para obtener información de CUALQUIER tema
-                const url = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
-                const response = await fetch(url);
-                
-                if (!response.ok) throw new Error('No encontrado');
-                
-                const data = await response.json();
-
-                if (data.title && data.extract) {
-                    titulo.innerText = data.title;
-                    contenido.innerText = data.extract;
-                } else {
-                    mostrarNoEncontrado();
-                }
-            } catch (error) {
-                mostrarNoEncontrado();
-            }
-        }
-
-        function mostrarNoEncontrado() {
-            document.getElementById('titulo-res').innerText = "Concepto no encontrado";
-            document.getElementById('contenido-res').innerText = "La enciclopedia no ha podido hallar ese término específico. Prueba con palabras más generales o revisa la ortografía.";
-        }
-
-        // Función de voz (Sintetizador)
-        function hablar() {
-            const texto = document.getElementById('contenido-res').innerText;
-            if (!texto) return;
-            
-            // Cancelar cualquier lectura previa
-            window.speechSynthesis.cancel();
-            
-            const lectura = new SpeechSynthesisUtterance(texto);
-            lectura.lang = 'es-ES'; // Configurar idioma español
-            lectura.pitch = 1;      // Tono
-            lectura.rate = 1;       // Velocidad
-            window.speechSynthesis.speak(lectura);
-        }
-
-        // Permitir buscar al presionar "Enter"
-        document.getElementById('busqueda').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                buscar();
-            }
-        });
-    </script>
 </body>
 </html>
