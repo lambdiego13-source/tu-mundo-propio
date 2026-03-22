@@ -41,3 +41,8 @@ btnVoz.addEventListener('click', hablarResultado);
 inputBusqueda.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') realizarBusqueda();
 });
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
+    .then(reg => console.log('Service Worker registrado con éxito', reg))
+    .catch(err => console.warn('Error al registrar el Service Worker', err));
+}
