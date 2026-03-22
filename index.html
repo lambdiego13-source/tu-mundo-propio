@@ -16,6 +16,7 @@
         </header>
 
         <div class="busqueda-box">
+            <!-- IMPORTANTE: El id debe ser 'inputBusqueda' -->
             <input type="text" id="inputBusqueda" placeholder="¿Qué quieres investigar?">
             <div class="botones-accion">
                 <button id="btnBuscar">Buscar</button>
@@ -23,12 +24,13 @@
             </div>
         </div>
 
+        <!-- Aquí es donde Wikipedia escribirá la información -->
         <section id="resultados" class="seccion-resultados">
-            <!-- Aquí aparecerán las imágenes y textos -->
             <p class="mensaje-espera">Esperando tu búsqueda...</p>
         </section>
     </div>
 
-    <script src="script.js"></script>
+    <!-- El ?v=2 obliga a tu Android a cargar el script nuevo -->
+    <script src="script.js?v=2"></script>
 </body>
 </html>
