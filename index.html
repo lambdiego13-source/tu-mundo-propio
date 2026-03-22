@@ -3,147 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Mundo - Enciclopedia Visual</title>
-    
+    <title>Tu Mundo - Buscador</title>
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* Estilos base para el cuerpo */
-        body {
-            background-color: #121212; /* Fondo oscuro */
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Estilo para el título principal */
-        h1.titulo {
-            color: #ff00ff; /* Fucsia Neón */
-            text-shadow: 0 0 10px #ff00ff;
-            margin-bottom: 20px;
-        }
-
-        /* Contenedor del buscador */
-        .buscador-container {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            flex-grow: 1;
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: 2px solid #39FF14; /* Verde Neón */
-            background-color: rgba(0,0,0,0.5);
-            color: white;
-            outline: none;
-            font-size: 16px;
-        }
-
-        .btn-buscar {
-            padding: 12px 24px;
-            border-radius: 25px;
-            border: none;
-            background-color: #ff00ff; /* Fucsia Neón */
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-size: 16px;
-        }
-
-        .btn-buscar:active {
-            transform: scale(0.95);
-            box-shadow: 0 0 10px #ff00ff;
-        }
-
-        /* --- Estilo del Cuadro de Información (Tu diseño actual) --- */
-        .info-card {
-            border: 3px solid #39FF14; /* Verde Neón */
-            border-radius: 20px;
-            padding: 20px;
-            width: 100%;
-            max-width: 500px;
-            background-color: rgba(0, 0, 0, 0.7);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
-            margin-bottom: 20px;
-        }
-
-        .info-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .info-header h2 {
-            margin: 0;
-            color: white;
-        }
-
-        .btn-escuchar {
-            background-color: transparent;
-            border: 2px solid #ff00ff; /* Fucsia Neón */
-            color: #ff00ff;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.2s;
-        }
-
-        .btn-escuchar:active {
-            background-color: rgba(255, 0, 255, 0.2);
-            transform: scale(0.95);
-        }
-
-        .info-body p {
-            margin: 0;
-            line-height: 1.6;
-            color: #e0e0e0;
-        }
-
-        /* --- Estilo del Contenedor de Imágenes de Pixabay --- */
-        #contenedor-fotos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            width: 100%;
-            max-width: 600px;
-            padding: 20px 0;
-        }
-
-        /* Las imágenes usarán los estilos que definimos en style.css (bordes neón) */
-
-    </style>
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-    <h1 class="titulo">Tu Mundo</h1>
+    <div class="contenedor-principal">
+        <header>
+            <h1 class="titulo-neon">Tu Mundo</h1>
+            <p class="subtitulo">Explora la Naturaleza</p>
+        </header>
 
-    <div class="buscador-container">
-        <input type="text" id="inputBusqueda" placeholder="Investiga planetas, animales, arte...">
-        <button class="btn-buscar" onclick="realizarBusqueda()">Investigar</button>
+        <div class="busqueda-box">
+            <input type="text" id="inputBusqueda" placeholder="¿Qué quieres investigar?">
+            <div class="botones-accion">
+                <button id="btnBuscar">Buscar</button>
+                <button id="btnVoz" title="Escuchar">🎤</button>
+            </div>
+        </div>
+
+        <section id="resultados" class="seccion-resultados">
+            <!-- Aquí aparecerán las imágenes y textos -->
+            <p class="mensaje-espera">Esperando tu búsqueda...</p>
+        </section>
     </div>
 
-    <div class="info-card">
-        <div class="info-header">
-            <h2 id="info-titulo">Información</h2>
-            <button class="btn-escuchar" onclick="hablar()">
-                Escuchar <span>🔊</span>
-            </button>
-        </div>
-        <div class="info-body">
-            <p id="info-texto">
-                Ingresa un tema arriba para buscar imágenes relacionadas. Esta sección está lista para integrarse con la información textual que desees mostrar de tu base de datos o API de Wikipedia.
-            </p>
+    <script src="script.js"></script>
+</body>
+</html>
